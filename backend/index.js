@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/routes.js');
+const multer = require('multer');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -26,7 +27,7 @@ const corsOptions = {
 };
 
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 
 app.use(cors(corsOptions));

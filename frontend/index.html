@@ -18,9 +18,11 @@
       <div class="col col-md-8 createItemContainer">
         <h1>PROFILE</h1>
         <h3>Create new post</h3><br />
-        <input type="text" id="newPostImage" class="form-control" placeholder="Image" aria-label="Image" aria-describedby="basic-addon2">
-        <textarea class="form-control" id="newPostCaption" placeholder="Write a caption..." rows="3"></textarea>
-        <button class="createItem btn btn-dark" onclick="createPost()">Create</button>
+        <form action="/upload/photo" enctype="multipart/form-data" method="POST"> 
+          <input type="file" name="myImage" placeholder="image" id="newPostImage" accept="image/*" />
+          <textarea class="form-control" id="newPostCaption" placeholder="Write a caption..." rows="3"></textarea>
+          <input type="submit" class="createItem btn btn-dark" onclick="createPost()" value="Upload Photo"/>
+        </form>
       </div>
       <div class="col col-md-8 createItemContainer">
         <h3>Posts
