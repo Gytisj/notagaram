@@ -26,7 +26,7 @@ const getAll = async (req, res) => {
 
 }
 
-let logout = (req, res) => {
+const logout = (req, res) => {
     let token = req.token
     let user = req.user
     user.update({

@@ -1,47 +1,46 @@
-// import { response } from "express";
-// import { json } from "body-parser";
-
-
 const registerUser = () => {
-    //console.log('test');
-    let email = document.getElementById('registerEmail').value
-    let password = document.getElementById('registerPassword').value
-    let rPassword = document.getElementById('registerRPassword').value
-    console.log(email, password, rPassword);
+    
+    const username = document.getElementById('registerUsername').value;
+    const fullName = document.getElementById('registerFullName').value;
+    const password = document.getElementById('registerPassword').value;
+    const rPassword = document.getElementById('registerRPassword').value;
+
+    //console.log(email, password, rPassword);
 
     if (password === rPassword) {
         let body = {
-            username: email,
+            username: username,
+            fullName: fullName,
             password: password
         }
 
+        fetch('http://localhost:2000/api/v1/user/register', {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(json => {
+                if (json.status == 200) {
+                    return json.json();
+                } else {
+                    alert('REGISTRATION: failed');
+                }
 
-        fetch('http://localhost:3000/api/v1/user/register', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type' : 'application/json'
-            }
-        })
-        .then(json => {
-            if (json.status == 200){
-                return json.json();
-            } else {
-                alert('Registracion failed');
-            }
+            })
+            .then(response => {
+                if (response) {
+                    alert('REGISTRATION: success');
+                    window.location.href = "/login.html";
+                }
 
-        })
-        .then(response => {
-            if (response) {
-                alert('Registracion success');
-                window.location.href = "/login.html";
-            }
-            
-        })
-        .catch(e => {
-            console.log(e)
-        })
+            })
+            .catch(e => {
+                console.log(e)
+            })
+
+    } else {
+        alert('REGISTRATION: Password does not match')
     }
 }
-
-console.log('dsfsdf')

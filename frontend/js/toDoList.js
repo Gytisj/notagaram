@@ -1,16 +1,16 @@
 const checkifLoggedIn = () => {
-    let token = localStorage.getItem('x-auth');
+    const token = localStorage.getItem('x-auth');
 
     if (!token) {
-        alert('baaam');
+        alert('Redirecting to login');
         window.location.href = "/login.html";
 
     } else {
-        getItems();
+        //getItems();
     }
 }
 
-const createItem = () => {
+const createPost = () => {
 
     let token = localStorage.getItem('x-auth');
     let item = document.getElementById('newItem').value
@@ -19,7 +19,7 @@ const createItem = () => {
         item: item
     }
 
-    fetch('http://localhost:3000/api/v1/todo/register', {
+    fetch('http://localhost:2000/api/v1/todo/register', {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -48,7 +48,7 @@ const createItem = () => {
         })
 }
 
-const getItems = () => {
+const getPosts = () => {
     console.log('GETING ITEMS later!!!');
 
     let token = localStorage.getItem('x-auth');
@@ -128,7 +128,7 @@ const getItems = () => {
         })
 }
 
-const editItem = (id) => {
+const editPost = (id) => {
 
     let token = localStorage.getItem('x-auth');
 
@@ -160,7 +160,7 @@ const editItem = (id) => {
 
 }
 
-const deleteItem = (id) => {
+const deletePost = (id) => {
 
     let token = localStorage.getItem('x-auth');
 
@@ -195,45 +195,10 @@ const deleteItem = (id) => {
 
 const logout = () => {
 
-    let token = localStorage.getItem('x-auth');
-    //localStorage.removeItem('x-auth');
-    console.log('loginuos lauk')
-    fetch('http://localhost:3000/api/v1/user/logout', {
+    const token = localStorage.getItem('x-auth');
+
+    fetch('http://localhost:2000/api/v1/user/logout', {
             method: 'GET',
-            //body: JSON.stringify(body), 
-            headers: {
-                // 'Content-Type': 'application/json',
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-
-            //console.log(token);
-            return header.json();
-        })
-        .then(response => {
-            localStorage.clear();
-            console.log(response)
-            //getItems();
-            console.log('Successfully logouted!')
-            //alert('Event deleted!');
-        })
-        .catch(e => {
-            console.log(e)
-            //alert('Logout failled!')
-        })
-}
-
-const deleteTokens = () => {
-
-    let token = localStorage.getItem('x-auth');
-
-    fetch(`http://localhost:3000/api/v1/user/logout/${id}`, {
-            method: 'DELETE',
-            //body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth': token
@@ -244,23 +209,20 @@ const deleteTokens = () => {
                 throw Error(header)
             }
 
-            //console.log(token);
             return header.json();
         })
         .then(response => {
-
+            localStorage.removeItem('x-auth');
             //console.log(response)
-            getItems();
-            console.log('Successfully logouted!')
-            //alert('Event deleted!');
+            //getItems();
+            alert('LOGOUT: successful');
+            window.location.href = "/login.html";
         })
         .catch(e => {
             console.log(e)
-            alert('Logout failled!')
+            alert('LOGOUT: failed!')
         })
-
-
-
 }
+
 
 checkifLoggedIn()

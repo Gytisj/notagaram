@@ -4,13 +4,13 @@ const toDoListController = require('../toDoList/toDoListController.js');
 const middleware = require('../middleware/middleware.js');
 
 router.get('/', (req, res) => {
-    res.json('Api is working');
+    res.json('API STATUS: working');
 })
 
 //user routes
 router.post('/user/register', userController.register);
-router.get('/user/getAllUsers', userController.getAll);
-router.get('/user/getSingleUser/:id', userController.getSingleUser);
+//router.get('/user/getAllUsers', userController.getAll);
+//router.get('/user/getSingleUser/:id', userController.getSingleUser);
 router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
 
