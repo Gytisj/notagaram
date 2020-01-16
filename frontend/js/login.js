@@ -1,55 +1,47 @@
 const goToRegister = () => {
-
     window.location.href = "/register.html";
+
 }
 
-const login = () => { 
-    
-    let username = document.getElementById('loginEmail').value;
-    let password = document.getElementById('loginPassword').value;
+const login = () => {
 
-    console.log(username, password)
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+
+    //console.log(username, password)
 
     let body = {
         username: username,
         password: password
     }
 
-    fetch('http://localhost:3000/api/v1/user/login', {
+    fetch('http://localhost:2000/api/v1/user/login', {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json'
             }
         })
         .then(header => {
-            // if (json.status == 200){
-            //     return json.json();
-            // } else {
-            //     alert('Login failed');
-            // }
 
-            //console.log(json=)
-            if(!header.ok) {
+            if (!header.ok) {
                 throw Error(header)
             }
 
-            let token = header.headers.get('x-auth');
+            const token = header.headers.get('x-auth');
             localStorage.setItem('x-auth', token);
-            console.log(token);
+            //console.log(token);
 
             return header.json();
-
         })
         .then(response => {
-            
-            console.log(response) 
-            alert('Login success'); 
+            //console.log(response)
+            alert('LOGIN: success');
             window.location.href = '/index.html'
-            
+
         })
         .catch(e => {
             console.log(e)
-            alert('Login failed')
+            alert('LOGIN: failed')
         })
 }

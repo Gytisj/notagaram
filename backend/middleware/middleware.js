@@ -30,7 +30,7 @@ const authenticate = async (req, res, next) => {
             req.token = token;
             next()
         } else {
-            res.status(401).json('Not authorized');
+            res.status(401).json('AUTHENTIFICATION: failed');
         }
     } catch (err) {
         res.status(400).json(err);
