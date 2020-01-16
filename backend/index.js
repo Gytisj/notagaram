@@ -10,7 +10,8 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/notagram', {
     useCreateIndex: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    autoIndex: true
 })
 
 //Db connection test

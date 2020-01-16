@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId
         }
     }],
+    following: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId
+        }
+    }],
     tokens: [{
         access: {
             type: String,

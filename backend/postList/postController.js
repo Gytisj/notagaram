@@ -1,15 +1,16 @@
-const ToDoList = require('./toDoListModel');
+const PostModel = require('./postModel');
 
-const addList = (req, res) => {
+const addPost = (req, res) => {
     let data = req.body;
-    let toDoList = new ToDoList();
-    toDoList.event = data.event;
-    toDoList.walkCertainAmountOfMetters = data.walkCertainAmountOfMetters;
-    toDoList.walkDog = data.walkDog;
-    toDoList.user = req.user._id;
+    let newPost = new PostModel();
 
-    toDoList.save().then((createdToDoList) => {
-        res.json(createdToDoList)
+    newPost.imageURL = data.imageURL;
+    newPost.caption = data.caption;
+    newPost.user = req.user._id;
+
+    newPost.save().then((createdPost) => {
+        console.log(createdPost);
+        res.json(createdPost)
     }).catch((err) => {
         res.status(400).json(err);
     })
@@ -27,6 +28,7 @@ const getAllLists = async (req, res) => {
 
 }
 
+//unused
 const getSingleList = async (req, res) => {
     let id = req.params.id;
     try {
@@ -63,7 +65,7 @@ const findOneAndUpdate = async (req, res) => {
 
 
 module.exports = {
-    addList,
+    addPost,
     getAllLists,
     getSingleList,
     findOneAndRemove,

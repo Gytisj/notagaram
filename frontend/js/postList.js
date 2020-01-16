@@ -13,13 +13,15 @@ const checkifLoggedIn = () => {
 const createPost = () => {
 
     let token = localStorage.getItem('x-auth');
-    let item = document.getElementById('newItem').value
+    let image = document.getElementById('newPostImage').value
+    let caption = document.getElementById('newPostCaption').value
 
     let body = {
-        item: item
+        imageURL : image,
+        caption : caption
     }
 
-    fetch('http://localhost:2000/api/v1/todo/register', {
+    fetch('http://localhost:2000/api/v1/postList/addPost', {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -37,10 +39,10 @@ const createPost = () => {
         })
         .then(response => {
 
-            //console.log(response)
-            alert('Item added');
+            console.log(response)
+            // alert('Item added');
             // window.location.href = '/index.html'
-            getItems();
+            // getItems();
         })
         .catch(e => {
             console.log(e)

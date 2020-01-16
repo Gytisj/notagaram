@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const userController = require('../user/userController.js');
-const toDoListController = require('../toDoList/toDoListController.js');
+const postController = require('../postList/postController.js');
 const middleware = require('../middleware/middleware.js');
 
 router.get('/', (req, res) => {
@@ -15,11 +15,11 @@ router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
 
 //toDoList routes
-router.post('/toDoList/addList', middleware.authenticate, toDoListController.addList);
-router.get('/toDoList/getAllLists', middleware.authenticate, toDoListController.getAllLists);
-router.get('/toDoList/getSingleList/:id', toDoListController.getSingleList);
-router.delete('/toDoList/findOneAndRemove/:id', toDoListController.findOneAndRemove);
-router.patch('/toDoList/findOneAndUpdate/:id', toDoListController.findOneAndUpdate);
+router.post('/postList/addPost',middleware.authenticate, postController.addPost);
+// router.get('/toDoList/getAllLists', middleware.authenticate, toDoListController.getAllLists);
+// router.get('/toDoList/getSingleList/:id', toDoListController.getSingleList);
+// router.delete('/toDoList/findOneAndRemove/:id', toDoListController.findOneAndRemove);
+// router.patch('/toDoList/findOneAndUpdate/:id', toDoListController.findOneAndUpdate);
 
 
 
