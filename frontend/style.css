@@ -27,7 +27,7 @@ input {
   padding-bottom: 40px;
 }
 
-.createItemContainer input {}
+
 
 .createItemContainer button {
   width: 100px;
@@ -37,4 +37,12 @@ input {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+
+/* styles for testing */
+.post-container {
+  margin-bottom: 10px;
+  border: 1px solid black;
+  padding: 5px;
 }

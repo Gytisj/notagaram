@@ -1,27 +1,36 @@
 const PostModel = require('./postModel');
+const date = new Date();
+
 
 const addPost = (req, res) => {
-    let data = req.body;
-    let newPost = new PostModel();
+    const data = req.body;
+    const newPost = new PostModel();
 
+    //console.log(req.user)
     newPost.imageURL = data.imageURL;
     newPost.caption = data.caption;
-    newPost.user = req.user._id;
+    newPost.username = req.user.username
+    newPost.userID = req.user._id;
+    newPost.date = date.getTime();
+    //console.log(req.user._id)
 
     newPost.save().then((createdPost) => {
         console.log(createdPost);
         res.json(createdPost)
     }).catch((err) => {
+        console.log(err);
         res.status(400).json(err);
     })
 }
 
-const getAllLists = async (req, res) => {
+//post list by user ID
+const getAllPosts = async (req, res) => {
     try {
-        let toDoList = await ToDoList.find({
-            user: req.user._id
+        const postList = await PostModel.find({
+            userID: req.user._id
         })
-        res.json(toDoList)
+        res.json(postList)
+
     } catch (err) {
         res.status(400).json(err);
     }
@@ -66,8 +75,8 @@ const findOneAndUpdate = async (req, res) => {
 
 module.exports = {
     addPost,
-    getAllLists,
-    getSingleList,
-    findOneAndRemove,
-    findOneAndUpdate
+    getAllPosts,
+    // getSingleList,
+    // findOneAndRemove,
+    // findOneAndUpdate
 }
