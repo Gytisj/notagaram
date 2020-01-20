@@ -24,7 +24,7 @@ router.get('/postList/getAllPosts', middleware.authenticate, postController.getA
 
 //CommentList routes
 router.post('/commentList/addComment', middleware.authenticate, commentController.addComment);
-
+router.get('/commentList/getComment/:id', commentController.getPostComments);
 
 
 module.exports = router;

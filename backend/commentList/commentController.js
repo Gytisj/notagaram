@@ -19,12 +19,13 @@ const addComment = (req, res) => {
     })
 }
 
-const getAllComments = async (req, res) => {
+const getPostComments = async (req, res) => {
     try {
+        //console.log(req)
         const commentModel = await CommentModel.find({
-            user: req.user._id
+            postId: req.params.id
         })
-        res.json(toDoList)
+        res.json(commentModel)
     } catch (err) {
         res.status(400).json(err);
     }
@@ -82,6 +83,6 @@ const editComment = async (req, res) => {
 
 module.exports = {
     addComment,
-    //getAllComments,
+    getPostComments,
     //editComment
 }

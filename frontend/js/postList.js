@@ -146,6 +146,34 @@ const deletePost = (id) => {
         })
 }
 
+const getAllPostComments = (postID) => {
+    console.log('GETING POST COMMENTS');
+
+    const token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:2000/api/v1/commentList/getComment/${postID}`, {
+            method: 'GET',
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+
+            return header.json();
+        })
+        .then(response => {
+            console.log(response);
+            
+        })
+        .catch(e => {
+            console.log(e)
+            //alert('FAILLED')
+        })
+}
+
 const renderAllPosts = (postArr) => {
     // "date": 1579259383502,
     // "likes": 0,
@@ -160,10 +188,14 @@ const renderAllPosts = (postArr) => {
     allPostsContainer.textContent = null;
 
     postArr.forEach(obj => {
-        const postContainer = document.createElement('div');
-        postContainer.classList.add('post-container')
+        
 
-        //postContainer content
+
+        //postContainer
+        const postContainer = document.createElement('div');
+        postContainer.classList.add('post-container');
+        postContainer.dataset.postID = obj._id;
+
         const userBar = document.createElement('p')
         const image = document.createElement('div');
         const buttonsBar = document.createElement('p')
@@ -173,7 +205,7 @@ const renderAllPosts = (postArr) => {
         const commentListSection = document.createElement('div');
 
         //userBar content
-        userBar.textContent = `Username: ${obj.username} UserID: ${obj.userID}`;
+        userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
         postContainer.appendChild(userBar);
 
         //image content
@@ -210,7 +242,24 @@ const renderAllPosts = (postArr) => {
         postContainer.appendChild(dateBar);
 
         //commentListSection content
-        commentListSection.textContent
+        const viewAllCommentsButton = document.createElement('button');
+        commentListSection.dataset.postID = obj._id;
+        viewAllCommentsButton.textContent = 'View all comments';
+
+        viewAllCommentsButton.addEventListener('click', (event) => {
+            getAllPostComments('5e2053181c0c7804804ac508')
+            
+            // console.log(event.target.parentNode.dataset.postID);
+            // console.log(event);
+            
+        })
+
+        commentListSection.appendChild(viewAllCommentsButton);
+        postContainer.appendChild(commentListSection);
+
+
+        
+
 
 
         allPostsContainer.appendChild(postContainer);
@@ -219,6 +268,14 @@ const renderAllPosts = (postArr) => {
 
 const renderAllComments = (commentsArr) => {
 
+    const allPostsContainer = document.getElementById('list');
+    
+    allPostsContainer.textContent = null;
+
+    commentsArr.forEach(obj => {
+        
+
+    });
 }
 
 
