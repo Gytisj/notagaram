@@ -2,7 +2,6 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/routes.js');
-const multer = require('multer');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -15,6 +14,8 @@ mongoose.connect('mongodb://localhost:27017/notagram', {
     autoIndex: true
 })
 
+app.use('/uploads', express.static('uploads'));
+
 //Db connection test
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -25,6 +26,7 @@ db.once('open', () => {
 const corsOptions = {
     exposedHeaders: ['x-auth']
 };
+
 
 app.use(bodyParser.urlencoded({
     extended: true
