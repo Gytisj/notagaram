@@ -9,11 +9,13 @@ const addPost = (req, res) => {
     const newPost = new PostModel();
 
     //console.log(req.user)
-    newPost.imageURL = imgFile.path;
+    newPost.imageURL = `http://localhost:2000/${imgFile.path}`;
     newPost.caption = data.caption;
     newPost.username = req.user.username
     newPost.userID = req.user._id;
     newPost.date = date.getTime();
+
+    console.log(newPost.imageURL);
 
     newPost.save().then((createdPost) => {
         console.log(createdPost);
