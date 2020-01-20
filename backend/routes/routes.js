@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const userController = require('../user/userController.js');
 const postController = require('../postList/postController.js');
+const commentController = require('../commentList/commentController.js')
 const middleware = require('../middleware/middleware.js');
 const multer = require('multer');
 
@@ -48,10 +49,14 @@ router.get('/postList/getAllPosts', middleware.authenticate, postController.getA
 //toDoList routes
 // router.post('/postList/addPost', middleware.authenticate, postController.addPost);
 // router.get('/toDoList/getAllLists', middleware.authenticate, toDoListController.getAllLists);
+
 // router.get('/toDoList/getSingleList/:id', toDoListController.getSingleList);
 // router.delete('/toDoList/findOneAndRemove/:id', toDoListController.findOneAndRemove);
 // router.patch('/toDoList/findOneAndUpdate/:id', toDoListController.findOneAndUpdate);
 
+//CommentList routes
+router.post('/commentList/addComment', middleware.authenticate, commentController.addComment);
+router.get('/commentList/getComment/:id', commentController.getPostComments);
 
 
 module.exports = router;

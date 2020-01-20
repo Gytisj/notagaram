@@ -1,32 +1,38 @@
-const PostModel = require('./postModel.js');
 
-const addPost = async (req, res) => {
+const PostModel = require('./postModel');
+const date = new Date();
 
-    let data = req.file;
-    let body = req.body;
 
-    let newPost = new PostModel();
+const addPost = (req, res) => {
+    const imgFile = req.file;
+    const data = req.body;
+    const newPost = new PostModel();
 
-    newPost.imageURL = data.path;
-    newPost.caption = body.caption;
-    newPost.user = req.user._id;
+    //console.log(req.user)
+    newPost.imageURL = imgFile.path;
+    newPost.caption = data.caption;
+    newPost.username = req.user.username
+    newPost.userID = req.user._id;
+    newPost.date = date.getTime();
 
-    newPost.save()
-    .then((createdPost) => {
+    newPost.save().then((createdPost) => {
+        console.log(createdPost);
         res.status(200).json(createdPost);
-    })
-    .catch((err) => {
+    }).catch((err) => {
         res.status(400).json(err);
     })
 }
 
+
+//post list by user ID
 const getAllPosts = async (req, res) => {
     try {
-        let postList = await PostList.find({
-            user: req.user._id
+        const postList = await PostModel.find({
+            userID: req.user._id
         })
         res.json(postList)
-        console.log(res);
+
+
     } catch (err) {
         res.status(400).json(err);
     }
@@ -72,7 +78,9 @@ const findOneAndUpdate = async (req, res) => {
 module.exports = {
     addPost,
     getAllPosts,
-    getSingleList,
-    findOneAndRemove,
-    findOneAndUpdate
+
+    // getSingleList,
+    // findOneAndRemove,
+    // findOneAndUpdate
+
 }

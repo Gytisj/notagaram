@@ -20,6 +20,7 @@ let alterData = (req, res, next) => {
 const authenticate = async (req, res, next) => {
     let token = req.header('x-auth');
     let decoded;
+    //console.log('middle-----------------------', req.user);
     try {
         decoded = jwt.verify(token, config.password);
         let user = await User.findOne({
@@ -43,4 +44,9 @@ const authenticate = async (req, res, next) => {
 module.exports = {
     alterData,
     authenticate
+}
+
+const findPostByUser = async () => {
+
+
 }

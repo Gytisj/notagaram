@@ -12,6 +12,7 @@ const checkifLoggedIn = () => {
 
 const createPost = () => {
 
+
     let token = localStorage.getItem('x-auth');
     let image = document.getElementById('newPostImage');
     let caption = document.getElementById('newPostCaption').value
@@ -19,8 +20,6 @@ const createPost = () => {
     let data = new FormData();
     data.append('picture', image.files[0]);
     data.append('caption', caption);
-
-
 
     fetch('http://localhost:2000/api/v1/postList/addPost', {
             method: 'POST',
@@ -30,6 +29,7 @@ const createPost = () => {
             }
         })
         .then(header => {
+            console.log(header)
             if (!header.ok) {
                 throw Error(header)
             }
@@ -38,6 +38,13 @@ const createPost = () => {
         .then(response => {
             alert('Item added');
 
+
+            getAllPosts()
+            //console.log(response)
+            // alert('Item added');
+            // window.location.href = '/index.html'
+            // getItems();
+
         })
         .catch(e => {
             console.log(e)
@@ -45,17 +52,16 @@ const createPost = () => {
         })
 }
 
-const getPosts = () => {
-    console.log('GETING ITEMS later!!!');
+const getAllPosts = () => {
+    console.log('GETING POSTS');
 
-    
-    let token = localStorage.getItem('x-auth');
+
+    const token = localStorage.getItem('x-auth');
 
     fetch('http://localhost:2000/api/v1/postList/getAllPosts', {
             method: 'GET',
-            body: JSON.stringify(body), 
             headers: {
-                'Content-Type': 'application/json',
+
                 'x-auth': token
             }
         })
@@ -69,58 +75,7 @@ const getPosts = () => {
         .then(response => {
 
             console.log(response);
-
-            // const unordereList = document.getElementById('list');
-            // unordereList.textContent = null;
-
-            // response.forEach(element => {
-            //     const listItem = document.createElement('li');
-            //     const titleContainer = document.createElement('p');
-            //     const checkInput = document.createElement('input');
-            //     const deleteBtn = document.createElement('button');
-            //     checkInput.type = 'checkbox';
-            //     // console.log('asdfsad', checkInput);
-
-            //     if (element.completed) {
-            //         checkInput.checked = true;
-            //     } else {
-            //         checkInput.checked = false;
-            //     }
-
-            //     titleContainer.textContent = element.item;
-            //     deleteBtn.textContent = 'DELETE';
-
-            //     listItem.appendChild(titleContainer)
-            //     listItem.appendChild(checkInput);
-            //     listItem.appendChild(deleteBtn);
-            //     unordereList.appendChild(listItem);
-
-            //     checkInput.addEventListener('click', (event) => {
-
-            //         if (event.target.checked) {
-
-            //             console.log(element._id)
-            //             //element.completed = true;
-            //             console.log('chekced')
-            //             editItem(element._id)
-
-            //         } else {
-            //             //element.selected = false;
-            //             console.log(element._id)
-            //             console.log('unchecked')
-            //             editItem(element._id)
-            //         }
-
-            //     })
-
-            //     deleteBtn.addEventListener('click', (event) => {
-            //         deleteItem(element._id);
-
-
-            //     })
-
-            // });
-
+            renderAllPosts(response);
         })
         .catch(e => {
             console.log(e)
@@ -193,6 +148,153 @@ const deletePost = (id) => {
         })
 }
 
+const getAllPostComments = (postID) => {
+    console.log('GETING POST COMMENTS');
+
+    const token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:2000/api/v1/commentList/getComment/${postID}`, {
+            method: 'GET',
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+
+            return header.json();
+        })
+        .then(response => {
+            console.log(response);
+            
+        })
+        .catch(e => {
+            console.log(e)
+            //alert('FAILLED')
+        })
+}
+
+const renderAllPosts = (postArr) => {
+    // "date": 1579259383502,
+    // "likes": 0,
+    // "_id": "5e21981566aaa05ec02f3606",
+    // "imageURL": "qqqqqqq",
+    // "caption": "qqqqqqqqq",
+    // "username": "jonas",
+    // "userID": "5e2053181c0c7804804ac508",
+    // "__v": 0
+
+    const allPostsContainer = document.getElementById('list');
+    allPostsContainer.textContent = null;
+
+    postArr.forEach(obj => {
+        
+
+
+        //postContainer
+        const postContainer = document.createElement('div');
+        postContainer.classList.add('post-container');
+        postContainer.dataset.postID = obj._id;
+
+        const userBar = document.createElement('p')
+        const image = document.createElement('div');
+        const buttonsBar = document.createElement('p')
+        const likesBar = document.createElement('p');
+        const caption = document.createElement('p');
+        const dateBar = document.createElement('p');
+        const commentListSection = document.createElement('div');
+
+        //userBar content
+        userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
+        postContainer.appendChild(userBar);
+
+        //image content
+        image.textContent = 'img';
+        postContainer.appendChild(image);
+
+        //buttonsBar content
+        const likeButton = document.createElement('button');
+        const commentButton = document.createElement('button');
+        const editButton = document.createElement('button');
+        const deleteButton = document.createElement('button');
+        likeButton.textContent = 'Like';
+        commentButton.textContent = 'Comment';
+        editButton.textContent = 'Edit';
+        deleteButton.textContent = 'Delete';
+
+        buttonsBar.appendChild(likeButton);
+        buttonsBar.appendChild(commentButton);
+        buttonsBar.appendChild(editButton);
+        buttonsBar.appendChild(deleteButton);
+
+        postContainer.appendChild(buttonsBar);
+
+        //likesBar content
+        likesBar.textContent = `Likes: ${obj.likes}`;
+        postContainer.appendChild(likesBar);
+
+        //caption content
+        caption.textContent =`Caption: ${obj.caption}` ;
+        postContainer.appendChild(caption);
+
+        //date content
+        dateBar.textContent = `date: ${unixToDate(obj.date)}`;
+        postContainer.appendChild(dateBar);
+
+        //commentListSection content
+        const viewAllCommentsButton = document.createElement('button');
+        commentListSection.dataset.postID = obj._id;
+        viewAllCommentsButton.textContent = 'View all comments';
+
+        viewAllCommentsButton.addEventListener('click', (event) => {
+            getAllPostComments('5e2053181c0c7804804ac508')
+            
+            // console.log(event.target.parentNode.dataset.postID);
+            // console.log(event);
+            
+        })
+
+        commentListSection.appendChild(viewAllCommentsButton);
+        postContainer.appendChild(commentListSection);
+
+
+        
+
+
+
+        allPostsContainer.appendChild(postContainer);
+    });
+}
+
+const renderAllComments = (commentsArr) => {
+
+    const allPostsContainer = document.getElementById('list');
+    
+    allPostsContainer.textContent = null;
+
+    commentsArr.forEach(obj => {
+        
+
+    });
+}
+
+
+//UNIX timestamp conversion to user friendly date
+const unixToDate = (unixTimestamp) =>{
+    const date = new Date(unixTimestamp);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    // const hour = date.getHours();
+    // const min = date.getMinutes();
+    // const sec = date.getSeconds();
+    const time = `${month} ${day}, ${year}`;
+    return time;
+}
+
 const logout = () => {
 
     const token = localStorage.getItem('x-auth');
@@ -226,3 +328,4 @@ const logout = () => {
 
 
 checkifLoggedIn()
+getAllPosts()
