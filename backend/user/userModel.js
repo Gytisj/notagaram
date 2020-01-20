@@ -24,6 +24,9 @@ const UserSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId
         }
     }],
+    imageURL: {
+        type: String
+    },
     following: [{
         userId: {
             type: mongoose.Schema.Types.ObjectId

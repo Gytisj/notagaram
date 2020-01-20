@@ -88,7 +88,30 @@ const login = async (req, res) => {
     } catch (err) {
         res.status(400).json(err);
     }
+}
 
+const getFullName = async (req,res)=>{
+    try {
+        const userFullName = req.user.fullName;
+        res.json(userFullName);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
+
+const getFollowers = async(req,res)=>{
+    const id = req.user._id;
+    try{
+        let user = await User.findById(id);
+        user ? res.json(user.followers) : res.json('No such user'); 
+    }
+    catch(error){
+        console.log('No Followers found ' + error);
+    }
+}
+
+const addProfileImage = async (req,res)=>{
+    let token = localStorage.getItem('x-auth');
 }
 
 module.exports = {
@@ -96,5 +119,8 @@ module.exports = {
     getAll,
     getSingleUser,
     login,
-    logout
+    logout,
+    getFullName,
+    getFollowers,
+    addProfileImage
 };

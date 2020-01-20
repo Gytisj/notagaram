@@ -26,6 +26,10 @@ const upload = multer({
 router.post('/user/register', userController.register);
 //router.get('/user/getAllUsers', userController.getAll);
 //router.get('/user/getSingleUser/:id', userController.getSingleUser);
+router.get('/user/getFullName', middleware.authenticate, userController.getFullName);
+router.get('/user/getFollowers', middleware.authenticate, userController.getFollowers);
+// Add profile image
+router.post('/user/addProfileImage', upload.single('picture'), middleware.authenticate, userController.addProfileImage);
 router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
 

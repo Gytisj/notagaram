@@ -327,6 +327,71 @@ const logout = () => {
         })
 }
 
+const getFullName = () =>{
+
+    const token = localStorage.getItem('x-auth');
+
+    fetch('http://localhost:2000/api/v1/user/getFullName', {
+            method: 'GET',
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            renderFullName(response);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+}
+
+const renderFullName = (fullName) =>{
+    const userFullName = fullName;
+    const h1 = document.getElementsByTagName('h1')[0];
+    h1.textContent = `Hello, ${fullName}`;
+}
+
+const getFollowers = () =>{
+
+    const token = localStorage.getItem('x-auth');
+
+    fetch('http://localhost:2000/api/v1/user/getFollowers', {
+            method: 'GET',
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            renderFollowerCount(response);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+}
+
+const renderFollowerCount =  (followers) =>{
+        const followerCount = followers.length;
+        const h1 = document.getElementsByTagName('h1')[0];
+        const span = document.createElement('span');
+        span.style.display = "block";
+        span.style.fontSize = "11pt";
+        span.textContent = `Follower count: ${followerCount}`;
+        h1.appendChild(span);
+}
+
+
 
 checkifLoggedIn()
 getAllPosts()
