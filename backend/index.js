@@ -14,6 +14,8 @@ mongoose.connect('mongodb://localhost:27017/notagram', {
     autoIndex: true
 })
 
+app.use('/uploads', express.static('uploads'));
+
 //Db connection test
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -25,8 +27,9 @@ const corsOptions = {
     exposedHeaders: ['x-auth']
 };
 
+
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 
 app.use(cors(corsOptions));

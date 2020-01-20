@@ -12,20 +12,19 @@ const checkifLoggedIn = () => {
 
 const createPost = () => {
 
-    const token = localStorage.getItem('x-auth');
-    const image = document.getElementById('newPostImage').value
-    const caption = document.getElementById('newPostCaption').value
 
-    const body = {
-        imageURL: image,
-        caption: caption
-    }
+    let token = localStorage.getItem('x-auth');
+    let image = document.getElementById('newPostImage');
+    let caption = document.getElementById('newPostCaption').value
+
+    let data = new FormData();
+    data.append('picture', image.files[0]);
+    data.append('caption', caption);
 
     fetch('http://localhost:2000/api/v1/postList/addPost', {
             method: 'POST',
-            body: JSON.stringify(body),
+            body: data,
             headers: {
-                'Content-Type': 'application/json',
                 'x-auth': token
             }
         })
@@ -34,17 +33,18 @@ const createPost = () => {
             if (!header.ok) {
                 throw Error(header)
             }
-
-            //console.log(token);
-            return header.json();
+            return header;
         })
         .then(response => {
+            alert('Item added');
+
 
             getAllPosts()
             //console.log(response)
             // alert('Item added');
             // window.location.href = '/index.html'
             // getItems();
+
         })
         .catch(e => {
             console.log(e)
@@ -55,11 +55,13 @@ const createPost = () => {
 const getAllPosts = () => {
     console.log('GETING POSTS');
 
+
     const token = localStorage.getItem('x-auth');
 
     fetch('http://localhost:2000/api/v1/postList/getAllPosts', {
             method: 'GET',
             headers: {
+
                 'x-auth': token
             }
         })
@@ -71,9 +73,9 @@ const getAllPosts = () => {
             return header.json();
         })
         .then(response => {
+
             console.log(response);
             renderAllPosts(response);
-            
         })
         .catch(e => {
             console.log(e)

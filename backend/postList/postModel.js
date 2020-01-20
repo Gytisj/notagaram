@@ -22,12 +22,10 @@ const postSchema = new mongoose.Schema({
     },
     userID: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        //unique: true
+        required: true
     }
+});
 
-})
+const postModel = mongoose.model('postList', postSchema);
 
-const postList = mongoose.model('postList', postSchema);
-
-module.exports = postList; 
+module.exports = postModel; 

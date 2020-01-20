@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../user/userModel.js');
 
 
+
 let alterData = (req, res, next) => {
 
     if (!req.body.event) {
@@ -37,6 +38,8 @@ const authenticate = async (req, res, next) => {
         res.status(400).json(err);
     }
 }
+
+
 
 module.exports = {
     alterData,
