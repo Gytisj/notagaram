@@ -13,19 +13,19 @@ const checkifLoggedIn = () => {
 const createPost = () => {
 
     let token = localStorage.getItem('x-auth');
-    let image = document.getElementById('newPostImage').value
+    let image = document.getElementById('newPostImage');
     let caption = document.getElementById('newPostCaption').value
 
-    let body = {
-        imageURL : image,
-        caption : caption
-    }
+    let data = new FormData();
+    data.append('picture', image.files[0]);
+    data.append('caption', caption);
+
+
 
     fetch('http://localhost:2000/api/v1/postList/addPost', {
             method: 'POST',
-            body: JSON.stringify(body),
+            body: data,
             headers: {
-                'Content-Type': 'application/json',
                 'x-auth': token
             }
         })
@@ -33,16 +33,11 @@ const createPost = () => {
             if (!header.ok) {
                 throw Error(header)
             }
-
-            //console.log(token);
-            return header.json();
+            return header;
         })
         .then(response => {
+            alert('Item added');
 
-            console.log(response)
-            // alert('Item added');
-            // window.location.href = '/index.html'
-            // getItems();
         })
         .catch(e => {
             console.log(e)
@@ -53,13 +48,14 @@ const createPost = () => {
 const getPosts = () => {
     console.log('GETING ITEMS later!!!');
 
+    
     let token = localStorage.getItem('x-auth');
 
-    fetch('http://localhost:3000/api/v1/user/getAllToDoItems', {
+    fetch('http://localhost:2000/api/v1/postList/getAllPosts', {
             method: 'GET',
-            //body: JSON.stringify(body), 
+            body: JSON.stringify(body), 
             headers: {
-                // 'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
                 'x-auth': token
             }
         })
@@ -72,56 +68,58 @@ const getPosts = () => {
         })
         .then(response => {
 
-            const unordereList = document.getElementById('list');
-            unordereList.textContent = null;
+            console.log(response);
 
-            response.forEach(element => {
-                const listItem = document.createElement('li');
-                const titleContainer = document.createElement('p');
-                const checkInput = document.createElement('input');
-                const deleteBtn = document.createElement('button');
-                checkInput.type = 'checkbox';
-                // console.log('asdfsad', checkInput);
+            // const unordereList = document.getElementById('list');
+            // unordereList.textContent = null;
 
-                if (element.completed) {
-                    checkInput.checked = true;
-                } else {
-                    checkInput.checked = false;
-                }
+            // response.forEach(element => {
+            //     const listItem = document.createElement('li');
+            //     const titleContainer = document.createElement('p');
+            //     const checkInput = document.createElement('input');
+            //     const deleteBtn = document.createElement('button');
+            //     checkInput.type = 'checkbox';
+            //     // console.log('asdfsad', checkInput);
 
-                titleContainer.textContent = element.item;
-                deleteBtn.textContent = 'DELETE';
+            //     if (element.completed) {
+            //         checkInput.checked = true;
+            //     } else {
+            //         checkInput.checked = false;
+            //     }
 
-                listItem.appendChild(titleContainer)
-                listItem.appendChild(checkInput);
-                listItem.appendChild(deleteBtn);
-                unordereList.appendChild(listItem);
+            //     titleContainer.textContent = element.item;
+            //     deleteBtn.textContent = 'DELETE';
 
-                checkInput.addEventListener('click', (event) => {
+            //     listItem.appendChild(titleContainer)
+            //     listItem.appendChild(checkInput);
+            //     listItem.appendChild(deleteBtn);
+            //     unordereList.appendChild(listItem);
 
-                    if (event.target.checked) {
+            //     checkInput.addEventListener('click', (event) => {
 
-                        console.log(element._id)
-                        //element.completed = true;
-                        console.log('chekced')
-                        editItem(element._id)
+            //         if (event.target.checked) {
 
-                    } else {
-                        //element.selected = false;
-                        console.log(element._id)
-                        console.log('unchecked')
-                        editItem(element._id)
-                    }
+            //             console.log(element._id)
+            //             //element.completed = true;
+            //             console.log('chekced')
+            //             editItem(element._id)
 
-                })
+            //         } else {
+            //             //element.selected = false;
+            //             console.log(element._id)
+            //             console.log('unchecked')
+            //             editItem(element._id)
+            //         }
 
-                deleteBtn.addEventListener('click', (event) => {
-                    deleteItem(element._id);
+            //     })
+
+            //     deleteBtn.addEventListener('click', (event) => {
+            //         deleteItem(element._id);
 
 
-                })
+            //     })
 
-            });
+            // });
 
         })
         .catch(e => {

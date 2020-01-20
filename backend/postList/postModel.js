@@ -11,11 +11,10 @@ const postSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true
+        required: true
     }
-})
+});
 
-let postList = mongoose.model('postList', postSchema);
+let postModel = mongoose.model('postList', postSchema);
 
-module.exports = postList; 
+module.exports = postModel; 
