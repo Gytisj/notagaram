@@ -199,7 +199,7 @@ const renderAllPosts = (postArr) => {
         postContainer.dataset.postID = obj._id;
 
         const userBar = document.createElement('p')
-        const image = document.createElement('div');
+        const image = document.createElement('img');
         const buttonsBar = document.createElement('p')
         const likesBar = document.createElement('p');
         const caption = document.createElement('p');
@@ -211,7 +211,8 @@ const renderAllPosts = (postArr) => {
         postContainer.appendChild(userBar);
 
         //image content
-        image.textContent = 'img';
+        image.src = obj.imageURL;
+        image.style.width = '300px';
         postContainer.appendChild(image);
 
         //buttonsBar content
