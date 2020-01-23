@@ -12,7 +12,6 @@ const checkifLoggedIn = () => {
 
 const createPost = () => {
 
-
     let token = localStorage.getItem('x-auth');
     let image = document.getElementById('newPostImage');
     let caption = document.getElementById('newPostCaption').value
@@ -20,6 +19,7 @@ const createPost = () => {
     let data = new FormData();
     data.append('picture', image.files[0]);
     data.append('caption', caption);
+
 
     fetch('http://localhost:2000/api/v1/postList/addPost', {
             method: 'POST',
@@ -29,7 +29,6 @@ const createPost = () => {
             }
         })
         .then(header => {
-            console.log(header)
             if (!header.ok) {
                 throw Error(header)
             }
@@ -61,7 +60,6 @@ const getAllPosts = () => {
     fetch('http://localhost:2000/api/v1/postList/getAllPosts', {
             method: 'GET',
             headers: {
-
                 'x-auth': token
             }
         })
@@ -177,22 +175,12 @@ const getAllPostComments = (postID) => {
 }
 
 const renderAllPosts = (postArr) => {
-    // "date": 1579259383502,
-    // "likes": 0,
-    // "_id": "5e21981566aaa05ec02f3606",
-    // "imageURL": "qqqqqqq",
-    // "caption": "qqqqqqqqq",
-    // "username": "jonas",
-    // "userID": "5e2053181c0c7804804ac508",
-    // "__v": 0
 
     const allPostsContainer = document.getElementById('list');
     allPostsContainer.textContent = null;
 
     postArr.forEach(obj => {
         
-
-
         //postContainer
         const postContainer = document.createElement('div');
         postContainer.classList.add('post-container');
@@ -259,12 +247,6 @@ const renderAllPosts = (postArr) => {
 
         commentListSection.appendChild(viewAllCommentsButton);
         postContainer.appendChild(commentListSection);
-
-
-        
-
-
-
         allPostsContainer.appendChild(postContainer);
     });
 }
@@ -457,6 +439,15 @@ const addProfileImage = () =>{
 
 
 
+
+const feed = () => {
+    window.location.href = "/feed.html"
+}
+
+
+getFullName();
+getFollowers();
+getFollowing();
 
 checkifLoggedIn()
 getAllPosts()

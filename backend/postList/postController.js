@@ -10,16 +10,15 @@ const addPost = (req, res) => {
     //console.log(req.user)
     newPost.imageURL = `http://localhost:2000/${imgFile.path}`;
     newPost.caption = data.caption;
-    newPost.username = req.user.username
+    newPost.username = req.user.username;
     newPost.userID = req.user._id;
-    newPost.date = date.getTime();
-
-    console.log(newPost.imageURL);
+    newPost.date = date;
 
     newPost.save().then((createdPost) => {
         console.log(createdPost);
         res.status(200).json(createdPost);
     }).catch((err) => {
+        console.log(err);
         res.status(400).json(err);
     })
 }
@@ -31,6 +30,7 @@ const getAllPosts = async (req, res) => {
         const postList = await PostModel.find({
             userID: req.user._id
         })
+        console.log(postList);
         res.json(postList)
 
 
