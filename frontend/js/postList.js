@@ -182,8 +182,8 @@ const renderAllPosts = (postArr) => {
     postArr.forEach(obj => {
         
         //postContainer
-        const postContainer = document.createElement('div');
-        postContainer.classList.add('post-container');
+        const postContainer = document.createElement('li');
+        postContainer.classList.add('col', 'col-4');
         postContainer.dataset.postID = obj._id;
 
         const userBar = document.createElement('p')
@@ -200,7 +200,8 @@ const renderAllPosts = (postArr) => {
 
         //image content
         image.src = obj.imageURL;
-        image.style.width = '300px';
+        image.style.width = '250px';
+        image.style.height = '200px';
         postContainer.appendChild(image);
 
         //buttonsBar content

@@ -10,6 +10,11 @@ input {
   padding: 5px;
 }
 
+.personalFeed {
+  padding: 0px;
+  padding: 5px;
+}
+
 .formContainer {
   display: flex;
   justify-content: center;
@@ -31,6 +36,15 @@ ul {
 
 .createItemContainer button {
   width: 100px;
+}
+
+#profileOpen {
+  text-decoration: none;
+  color: black;
+}
+#profileOpen:hover {
+  text-decoration: none;
+  color: pink;
 }
 
 .loadMore {
@@ -61,4 +75,7 @@ ul {
 .nav {
   display: flex;
   justify-content: center;
+}
+.container {
+  width: 60%;
 }
