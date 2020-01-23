@@ -100,18 +100,15 @@ const getFullName = async (req,res)=>{
 }
 
 const getFollowers = async(req,res)=>{
-    const id = req.user._id;
-    try{
-        let user = await User.findById(id);
-        user ? res.json(user.followers) : res.json('No such user'); 
-    }
-    catch(error){
-        console.log('No Followers found ' + error);
-    }
+    res.json(req.user.followers.length);
+}
+
+const getFollowing = async(req,res)=>{
+    res.json(req.user.following.length);
 }
 
 const addProfileImage = async (req,res)=>{
-    let token = localStorage.getItem('x-auth');
+    res.json(req.body);
 }
 
 module.exports = {
@@ -122,5 +119,6 @@ module.exports = {
     logout,
     getFullName,
     getFollowers,
+    getFollowing,
     addProfileImage
 };

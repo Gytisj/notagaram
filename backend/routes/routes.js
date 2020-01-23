@@ -28,6 +28,7 @@ router.post('/user/register', userController.register);
 //router.get('/user/getSingleUser/:id', userController.getSingleUser);
 router.get('/user/getFullName', middleware.authenticate, userController.getFullName);
 router.get('/user/getFollowers', middleware.authenticate, userController.getFollowers);
+router.get('/user/getFollowing', middleware.authenticate, userController.getFollowing);
 // Add profile image
 router.post('/user/addProfileImage', upload.single('picture'), middleware.authenticate, userController.addProfileImage);
 router.post('/user/login', userController.login);

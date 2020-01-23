@@ -1,4 +1,3 @@
-
 const PostModel = require('./postModel');
 const date = new Date();
 
