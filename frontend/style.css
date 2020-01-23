@@ -2,6 +2,11 @@ body {
   background-color: #fafafa
 }
 
+.profile {
+  display: flex;
+  justify-content: space-around;
+}
+
 input {
   width: 100%;
   margin-bottom: 5px;

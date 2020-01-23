@@ -333,11 +333,11 @@ const getFullName = () =>{
         })
 }
 
-const renderFullName = (fullName) =>{
-    const userFullName = fullName;
-    const h1 = document.getElementsByTagName('h1')[0];
-    h1.textContent = `Hello, ${fullName}`;
-}
+// const renderFullName = (fullName) =>{
+//     const userFullName = fullName;
+//     const h1 = document.getElementsByTagName('h1')[0];
+//     h1.textContent = `Hello, ${fullName}`;
+// }
 
 const getFollowers = () =>{
     const token = localStorage.getItem('x-auth');
@@ -362,15 +362,15 @@ const getFollowers = () =>{
         })
 }
 
-const renderFollowerCount =  (followers) =>{
-        const followerCount = followers;
-        const h1 = document.getElementsByTagName('h1')[0];
-        const span = document.createElement('span');
-        span.style.display = "block";
-        span.style.fontSize = "11pt";
-        span.textContent = `Follower count: ${followerCount}`;
-        h1.appendChild(span);
-}
+// const renderFollowerCount =  (followers) =>{
+//         const followerCount = followers;
+//         const h1 = document.getElementsByTagName('h1')[0];
+//         const span = document.createElement('span');
+//         span.style.display = "block";
+//         span.style.fontSize = "11pt";
+//         span.textContent = `Follower count: ${followerCount}`;
+//         h1.appendChild(span);
+// }
 
 const getFollowing = () =>{
     const token = localStorage.getItem('x-auth');
@@ -395,15 +395,15 @@ const getFollowing = () =>{
         })
 }
 
-const renderFollowingCount =  (following) =>{
-        const followingCount = following;
-        const h1 = document.getElementsByTagName('h1')[0];
-        const span = document.createElement('span');
-        span.style.display = "block";
-        span.style.fontSize = "11pt";
-        span.textContent = `Following: ${following}`;
-        h1.appendChild(span);
-}
+// const renderFollowingCount =  (following) =>{
+//         const followingCount = following;
+//         const h1 = document.getElementsByTagName('h1')[0];
+//         const span = document.createElement('span');
+//         span.style.display = "block";
+//         span.style.fontSize = "11pt";
+//         span.textContent = `Following: ${following}`;
+//         h1.appendChild(span);
+// }
 
 const addProfileImage = () =>{
     let token = localStorage.getItem('x-auth');
