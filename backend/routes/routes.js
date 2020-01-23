@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const userController = require('../user/userController.js');
 const postController = require('../postList/postController.js');
+const feedController = require('../feedList/feedController.js');
 const commentController = require('../commentList/commentController.js')
 const middleware = require('../middleware/middleware.js');
 const multer = require('multer');
@@ -32,19 +33,9 @@ router.get('/user/logout', middleware.authenticate, userController.logout);
 //Image upload router
 router.post('/postList/addPost', upload.single('picture'), middleware.authenticate, postController.addPost);
 router.get('/postList/getAllPosts', middleware.authenticate, postController.getAllPosts);
-
-//Image retrieve route
-// router.get('/photos', (req, res) => {
-//     db.collection('mycollection').find().toArray((err, result) => {
-
-//         const imgArray = result.map(element => element._id);
-//         console.log(imgArray);
-
-//         if (err) return console.log(err)
-//         res.send(imgArray)
-
-//     })
-// });
+router.get('/postList/getAllFollowerPosts/:pageNumber', middleware.authenticate, feedController.getAllFollowingPosts);
+//router.get('/postList/getAllNonPrivateUsersPosts', feedController.getAllNonPrivateUsersPosts);
+router.get('/feedList/getAllPosts/:pageNumber', middleware.authenticate, feedController.getAllPosts);
 
 //toDoList routes
 // router.post('/postList/addPost', middleware.authenticate, postController.addPost);
