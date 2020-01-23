@@ -1,7 +1,6 @@
 const renderAllFollowingPosts = (postArr, location) => {
 
     const allPostsContainer = document.getElementById(`${location}`);
-    // allPostsContainer.textContent = null;
 
     postArr.forEach(obj => {
         
@@ -19,7 +18,7 @@ const renderAllFollowingPosts = (postArr, location) => {
         const commentListSection = document.createElement('div');
 
         //userBar content
-        userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
+        userBar.innerHTML = `<p><a id='profileOpen' href=''>Username: ${obj.username}</a> | UserID: ${obj.userID} | PostID: ${obj._id}</p>`;
         postContainer.appendChild(userBar);
 
         //image content
