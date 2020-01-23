@@ -88,7 +88,27 @@ const login = async (req, res) => {
     } catch (err) {
         res.status(400).json(err);
     }
+}
 
+const getFullName = async (req,res)=>{
+    try {
+        const userFullName = req.user.fullName;
+        res.json(userFullName);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
+
+const getFollowers = async(req,res)=>{
+    res.json(req.user.followers.length);
+}
+
+const getFollowing = async(req,res)=>{
+    res.json(req.user.following.length);
+}
+
+const addProfileImage = async (req,res)=>{
+    res.json(req.body);
 }
 
 module.exports = {
@@ -96,5 +116,9 @@ module.exports = {
     getAll,
     getSingleUser,
     login,
-    logout
+    logout,
+    getFullName,
+    getFollowers,
+    getFollowing,
+    addProfileImage
 };

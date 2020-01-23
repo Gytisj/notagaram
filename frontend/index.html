@@ -7,6 +7,7 @@
 </head>
 
 
+
 <body>
     <div class="feed">
         <a onclick="feed()"><button>
@@ -22,6 +23,8 @@
     <div class="row justify-content-md-center">
       <div class="col col-md-8 createItemContainer">
         <h1>PROFILE</h1>
+        <input type="file" name="profileImage" placeholder="profileImage" id="newProfileImage" accept="image/*"" />
+        <input type="submit" class="profileImage btn btn-light" onclick="addProfileImage()" value="Upload Profile Image" name="profileImage"/>
         <h3>Create new post</h3><br />
         <!-- <form action="/uploads/photo" enctype="multipart/form-data" method="POST">  -->
           <input type="file" name="myImage" placeholder="image" id="newPostImage" accept="image/*" />
@@ -40,6 +43,7 @@
       </div>
 
     </div>
+
 
   </div>
 </body>
