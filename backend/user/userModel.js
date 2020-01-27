@@ -25,7 +25,8 @@ const UserSchema = new mongoose.Schema({
         }
     }],
     imageURL: {
-        type: String
+        type: String,
+        required: false
     },
     following: [{
         userId: {

@@ -9,6 +9,7 @@
 
 
 <body>
+  <div class="container">
   <div class="feed">
     <a onclick="feed()"><button>
         FEED
@@ -19,19 +20,25 @@
         <ion-icon name="walk"></ion-icon>
       </button></a>
   </div>
+</div>
   <div class="container profile">
-    <div class="profilePic">
-      IMG
+    <div class="profilePic" id="profilePic">
+      <div class="uploadPic" id="uploadPic">
+        <p>Upload Profile Picture</p>
+        <input type="file" name="myImage" placeholder="image" id="profilePicture" accept="image/*" />
+        <input type="submit" id="profilePicture" class="createItem btn btn-dark" onclick="addProfileImage()" value="Upload Photo"
+              name="picture" />
+      </div>
     </div>
-    <div class="profileInfo">
-      PROFILE INFO
+    <div class="profileInfo" id="profileInfo">
+      
     </div>
   </div>
   <div class="sidenav_right" data-sidenavright="">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab"
-        aria-controls="activity" aria-selected="true">Personal Feed</a>
+          aria-controls="activity" aria-selected="true">Personal Feed</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
@@ -41,28 +48,28 @@
     <div class="tab-content about" id="myTabContent">
       <div class="tab-pane fade about_me active show" id="activity" role="tabpanel" aria-labelledby="activity-tab">
         <div class="container">
-            <div class="createItemContainer">
-                <h3>Posts
-                </h3><br />
-                <div class="card" style="width:100%">
-                  <ul class="row personalFeed" id="list">
-        
-                  </ul>
-                </div>
-              </div>
+          <div class="createItemContainer">
+            <h3>Posts
+            </h3><br />
+            <div class="card" style="width:100%">
+              <ul class="row personalFeed" id="list">
+
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
       <div class="tab-pane fade about_me" id="settings" role="tabpanel" aria-labelledby="settings-tab">
         <div class="container">
 
-            <div class="createItemContainer">
-                <h1>PROFILE</h1>
-                <h3>Create new post</h3><br />
-                <input type="file" name="myImage" placeholder="image" id="newPostImage" accept="image/*" />
-                <textarea class="form-control" id="newPostCaption" placeholder="Write a caption..." rows="3"></textarea>
-                <input type="submit" class="createItem btn btn-dark" onclick="createPost()" value="Upload Photo"
-                  name="picture" />
-              </div>
+          <div class="createItemContainer">
+            <h1>PROFILE</h1>
+            <h3>Create new post</h3><br />
+            <input type="file" name="myImage" placeholder="image" id="newPostImage" accept="image/*" />
+            <textarea class="form-control" id="newPostCaption" placeholder="Write a caption..." rows="3"></textarea>
+            <input type="submit" class="createItem btn btn-dark" onclick="createPost()" value="Upload Photo"
+              name="picture" />
+          </div>
 
         </div>
       </div>
@@ -70,26 +77,6 @@
   </div>
   <div class="container">
     <div class="row justify-content-md-center">
-      <!-- <div class="col col-md-8 createItemContainer">
-        <h1>PROFILE</h1>
-        <input type="file" name="profileImage" placeholder="profileImage" id="newProfileImage" accept="image/*"" />
-        <input type="submit" class="profileImage btn btn-light" onclick="addProfileImage()" value="Upload Profile Image" name="profileImage"/>
-        <h3>Create new post</h3><br />
-        <input type="file" name="myImage" placeholder="image" id="newPostImage" accept="image/*" />
-        <textarea class="form-control" id="newPostCaption" placeholder="Write a caption..." rows="3"></textarea>
-        <input type="submit" class="createItem btn btn-dark" onclick="createPost()" value="Upload Photo"
-          name="picture" />
-      </div> -->
-      <!-- <div class="col col-md-8 createItemContainer">
-        <h3>Posts
-        </h3><br />
-        <div class="card" style="width:100%">
-          <ul class="list-group" id="list">
-
-          </ul>
-        </div>
-      </div> -->
-
     </div>
 
 
@@ -104,5 +91,6 @@
 <script src="https://unpkg.com/ionicons@4.5.9-1/dist/ionicons.js"></script>
 <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
 <script src="./js/postList.js"></script>
+<script src="./js/profileInfo.js"></script>
 
 </html>

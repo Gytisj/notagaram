@@ -36,20 +36,45 @@ const createPost = () => {
         })
         .then(response => {
             alert('Item added');
-
-
             getAllPosts()
-            //console.log(response)
-            // alert('Item added');
-            // window.location.href = '/index.html'
-            // getItems();
-
         })
         .catch(e => {
             console.log(e)
             alert('Item failed')
         })
 }
+
+const addProfileImage = () => {
+
+    let token = localStorage.getItem('x-auth');
+    let image = document.getElementById('profilePicture');
+
+    let data = new FormData();
+    data.append('picture', image.files[0]);
+
+    fetch('http://localhost:2000/api/v1/user/addProfileImage', {
+            method: 'PATCH',
+            body: data,
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header;
+        })
+        .then(response => {
+            location.reload();
+        })
+        .catch(e => {
+            console.log(e)
+            alert('Item failed')
+        })
+}
+
+let postArrLength = 1;
 
 const getAllPosts = () => {
     console.log('GETING POSTS');
@@ -71,9 +96,9 @@ const getAllPosts = () => {
             return header.json();
         })
         .then(response => {
-
-            console.log(response);
             renderAllPosts(response);
+            //postNumber(response);
+            
         })
         .catch(e => {
             console.log(e)
@@ -183,7 +208,7 @@ const renderAllPosts = (postArr) => {
         
         //postContainer
         const postContainer = document.createElement('li');
-        postContainer.classList.add('col', 'col-4');
+        postContainer.classList.add('col', 'col-4', 'myFeed');
         postContainer.dataset.postID = obj._id;
 
         const userBar = document.createElement('p')
@@ -299,8 +324,6 @@ const logout = () => {
         })
         .then(response => {
             localStorage.removeItem('x-auth');
-            //console.log(response)
-            //getItems();
             alert('LOGOUT: successful');
             window.location.href = "/login.html";
         })
@@ -310,145 +333,10 @@ const logout = () => {
         })
 }
 
-const getFullName = () =>{
-    const token = localStorage.getItem('x-auth');
-
-    fetch('http://localhost:2000/api/v1/user/getFullName', {
-            method: 'GET',
-            headers: {
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-            return header.json();
-        })
-        .then(response => {
-            renderFullName(response);
-        })
-        .catch(e => {
-            console.log(e);
-        })
-}
-
-// const renderFullName = (fullName) =>{
-//     const userFullName = fullName;
-//     const h1 = document.getElementsByTagName('h1')[0];
-//     h1.textContent = `Hello, ${fullName}`;
-// }
-
-const getFollowers = () =>{
-    const token = localStorage.getItem('x-auth');
-
-    fetch('http://localhost:2000/api/v1/user/getFollowers', {
-            method: 'GET',
-            headers: {
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-            return header.json();
-        })
-        .then(response => {
-            renderFollowerCount(response);
-        })
-        .catch(e => {
-            console.log(e);
-        })
-}
-
-// const renderFollowerCount =  (followers) =>{
-//         const followerCount = followers;
-//         const h1 = document.getElementsByTagName('h1')[0];
-//         const span = document.createElement('span');
-//         span.style.display = "block";
-//         span.style.fontSize = "11pt";
-//         span.textContent = `Follower count: ${followerCount}`;
-//         h1.appendChild(span);
-// }
-
-const getFollowing = () =>{
-    const token = localStorage.getItem('x-auth');
-
-    fetch('http://localhost:2000/api/v1/user/getFollowing', {
-            method: 'GET',
-            headers: {
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-            return header.json();
-        })
-        .then(response => {
-            renderFollowingCount(response);
-        })
-        .catch(e => {
-            console.log(e);
-        })
-}
-
-// const renderFollowingCount =  (following) =>{
-//         const followingCount = following;
-//         const h1 = document.getElementsByTagName('h1')[0];
-//         const span = document.createElement('span');
-//         span.style.display = "block";
-//         span.style.fontSize = "11pt";
-//         span.textContent = `Following: ${following}`;
-//         h1.appendChild(span);
-// }
-
-const addProfileImage = () =>{
-    let token = localStorage.getItem('x-auth');
-    let image = document.getElementById('newProfileImage');
-
-    let data = [];
-    data.push(image.files[0]);
-    console.log(data);
-
-    fetch('http://localhost:2000/api/v1/user/addProfileImage', {
-            method: 'POST',
-            body: data,
-            headers: {
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            console.log(header)
-            if (!header.ok) {
-                throw Error(header)
-            }
-            return header;
-        })
-        .then(response => {
-            console.log('im here');
-            console.log(response);
-        })
-        .catch(e => {
-            console.log(e)
-            alert('failbro')
-        })
-}
-
-
-
-
-
 const feed = () => {
     window.location.href = "/feed.html"
 }
 
+checkifLoggedIn();
+getAllPosts();
 
-getFullName();
-getFollowers();
-getFollowing();
-
-checkifLoggedIn()
-getAllPosts()

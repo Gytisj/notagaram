@@ -27,20 +27,20 @@ const upload = multer({
 router.post('/user/register', userController.register);
 //router.get('/user/getAllUsers', userController.getAll);
 //router.get('/user/getSingleUser/:id', userController.getSingleUser);
-router.get('/user/getFullName', middleware.authenticate, userController.getFullName);
-router.get('/user/getFollowers', middleware.authenticate, userController.getFollowers);
-router.get('/user/getFollowing', middleware.authenticate, userController.getFollowing);
-// Add profile image
-router.post('/user/addProfileImage', upload.single('picture'), middleware.authenticate, userController.addProfileImage);
+router.get('/user/getFullName', middleware.authenticate, userController.getLoggedUserInfo);
 router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
+router.patch('/user/addProfileImage', upload.single('picture'), middleware.authenticate, userController.addProfileImage);
+router.get('/user/getAllPostsById', middleware.authenticate, userController.getAllPostsById);
 
 //Image upload router
 router.post('/postList/addPost', upload.single('picture'), middleware.authenticate, postController.addPost);
 router.get('/postList/getAllPosts', middleware.authenticate, postController.getAllPosts);
 router.get('/postList/getAllFollowerPosts/:pageNumber', middleware.authenticate, feedController.getAllFollowingPosts);
-//router.get('/postList/getAllNonPrivateUsersPosts', feedController.getAllNonPrivateUsersPosts);
+
+//Feed routes
 router.get('/feedList/getAllPosts/:pageNumber', middleware.authenticate, feedController.getAllPosts);
+
 
 //toDoList routes
 // router.post('/postList/addPost', middleware.authenticate, postController.addPost);
