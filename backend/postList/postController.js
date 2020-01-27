@@ -15,7 +15,6 @@ const addPost = (req, res) => {
     newPost.date = date;
 
     newPost.save().then((createdPost) => {
-        console.log(createdPost);
         res.status(200).json(createdPost);
     }).catch((err) => {
         console.log(err);
@@ -30,7 +29,6 @@ const getAllPosts = async (req, res) => {
         const postList = await PostModel.find({
             userID: req.user._id
         })
-        console.log(postList);
         res.json(postList)
 
 

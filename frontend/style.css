@@ -2,9 +2,31 @@ body {
   background-color: #fafafa
 }
 
+.uploadPic {
+  display: inline-block;
+}
+
 .profile {
   display: flex;
   justify-content: space-around;
+}
+#profilePicture {
+  width: 105px;
+}
+.btn {
+  padding: 0px;
+}
+
+#profileInfo {
+  display: inline-block;
+}
+
+#infoP {
+  margin-right: 5px;
+}
+
+#statdiv {
+  display: flex;
 }
 
 input {
