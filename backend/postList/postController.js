@@ -49,6 +49,23 @@ const getAllPosts = async (req, res) => {
 
 }
 
+const getAllPostsById = async (req, res) => {
+
+    let id = req.params.id;
+
+    try {
+        const postList = await PostModel.find({
+            userID: id
+        })
+        res.json(postList.length);
+
+
+    } catch (err) {
+        res.status(400).json(err);
+    }
+
+}
+
 //unused
 const getSingleList = async (req, res) => {
     let id = req.params.id;
@@ -88,6 +105,7 @@ const findOneAndUpdate = async (req, res) => {
 module.exports = {
     addPost,
     getAllPosts,
+    getAllPostsById
 
     // getSingleList,
     // findOneAndRemove,

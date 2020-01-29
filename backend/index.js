@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/routes.js');
 const mongoose = require('mongoose');
+const sass = require('sass');
 
 const app = express();
 
@@ -26,7 +27,6 @@ db.once('open', () => {
 const corsOptions = {
     exposedHeaders: ['x-auth']
 };
-
 
 app.use(bodyParser.urlencoded({
     extended: true

@@ -76,6 +76,7 @@ const addProfileImage = () => {
 
 let postArrLength = 1;
 
+
 const getAllPosts = () => {
     console.log('GETING POSTS');
 
@@ -96,7 +97,8 @@ const getAllPosts = () => {
             return header.json();
         })
         .then(response => {
-            renderAllPosts(response);
+            //renderAllPosts(response);
+            renderAllPostImages(response);
             //postNumber(response);
             
         })
@@ -196,7 +198,7 @@ const getAllPostComments = (postID, postTagRef) => {
         })
         .then(response => {
             console.log(response);
-           
+            
             renderAllComments(response, postTagRef);
 
         })
@@ -288,19 +290,23 @@ const editComment = (id, updatedText) => {
         })
 }
 
-const renderAllPosts = (postArr) => {
+const toAddPicture = () => {
+    window.location.href = '/uploadPic.html';
+}
 
+const renderAllPosts = (postArr) => {
+​
     const allPostsContainer = document.getElementById('list');
     allPostsContainer.textContent = null;
-
+​
     postArr.forEach(obj => {
-        
-        //postContainer
-        const postContainer = document.createElement('li');
-        postContainer.classList.add('col', 'col-4', 'myFeed', 'post-container');
+​
+        const postContainer = document.createElement('div');
+        postContainer.classList.add('post-container');
         postContainer.id = obj._id;
-
-
+        //postContainer.dataset.postID = obj._id;
+        
+​
         const userBar = document.createElement('p')
         const image = document.createElement('img');
         const buttonsBar = document.createElement('p')
@@ -309,17 +315,16 @@ const renderAllPosts = (postArr) => {
         const dateBar = document.createElement('p');
         const commentListSection = document.createElement('div');
         const newCommentContainer = document.createElement('div');
-
+​
         //userBar content
         userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
         postContainer.appendChild(userBar);
-
+​
         //image content
         image.src = obj.imageURL;
-        image.style.width = '250px';
-        image.style.height = '200px';
+        image.style.width = '300px';
         postContainer.appendChild(image);
-
+​
         //buttonsBar content
         const likeButton = document.createElement('button');
         const commentButton = document.createElement('button');
@@ -329,26 +334,26 @@ const renderAllPosts = (postArr) => {
         commentButton.textContent = 'Comment';
         editButton.textContent = 'Edit';
         deleteButton.textContent = 'Delete';
-
+​
         buttonsBar.appendChild(likeButton);
         buttonsBar.appendChild(commentButton);
         buttonsBar.appendChild(editButton);
         buttonsBar.appendChild(deleteButton);
-
+​
         postContainer.appendChild(buttonsBar);
-
+​
         //likesBar content
         likesBar.textContent = `Likes: ${obj.likes}`;
         postContainer.appendChild(likesBar);
-
+​
         //caption content
         caption.textContent = `Caption: ${obj.caption}`;
         postContainer.appendChild(caption);
-
+​
         //date content
         dateBar.textContent = `date: ${unixToDate(obj.date)}`;
         postContainer.appendChild(dateBar);
-
+​
         //commentListSection content
         const viewAllCommentsButton = document.createElement('button');
         viewAllCommentsButton.textContent = 'View all comments';
@@ -358,41 +363,62 @@ const renderAllPosts = (postArr) => {
         ////renderAllComments(obj.latestComments, commentListSection)
         
         //console.log(obj.latestComments)
-
+​
         viewAllCommentsButton.addEventListener('click', (event) => {
-
+​
             viewAllCommentsButton.style.display = 'none';
             getAllPostComments(obj._id, commentListSection);
-
+​
         })
-
+​
         postContainer.appendChild(viewAllCommentsButton);
         postContainer.appendChild(commentListSection);
-
-
+​
         //commentInput section
         newCommentContainer.classList.add('new-comment-container');
-
+​
         const addCommentInput = document.createElement('input');
         addCommentInput.placeholder = 'Add a comment...'
         newCommentContainer.appendChild(addCommentInput);
-
+​
         const addCommentButton = document.createElement('button');
         addCommentButton.textContent = 'POST';
         newCommentContainer.appendChild(addCommentButton);
-
+​
         addCommentButton.addEventListener('click', event => {
         
             viewAllCommentsButton.style.display = 'none'
             createComment(obj._id, addCommentInput.value, commentListSection);
-
-
+​
+​
         })
-
+​
         postContainer.appendChild(newCommentContainer);
+​
+        allPostsContainer.appendChild(postContainer);
+    });
+}
+
+const renderAllPostImages = () => {
+  
+    const allPostsContainer = document.getElementById('list');
+    allPostsContainer.textContent = null;
+
+    postArr.forEach(obj => {
+        
+        const postContainer = document.createElement('li');
+        postContainer.classList.add('col-4', 'myFeed');
+        const image = document.createElement('img');
+        image.setAttribute('id', 'myOwnPicture');
+        image.src = obj.imageURL;
+        image.style.width = '100%';
+        image.style.height = '300px';
+        postContainer.appendChild(image);
+        allPostsContainer.appendChild(postContainer);
 
         allPostsContainer.appendChild(postContainer);
     });
+
 }
 
 const renderAllComments = (commentsArr, commetsContainer) => {
@@ -527,18 +553,20 @@ const renderLatestComments = (commentsArr) => {
 
 
 //UNIX timestamp conversion to user friendly date
-const unixToDate = (unixTimestamp) => {
-    const date = new Date(unixTimestamp);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const year = date.getFullYear();
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    // const hour = date.getHours();
-    // const min = date.getMinutes();
-    // const sec = date.getSeconds();
-    const time = `${month} ${day}, ${year}`;
-    return time;
-}
+
+// const unixToDate = (unixTimestamp) =>{
+//     const date = new Date(unixTimestamp);
+//     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//     const year = date.getFullYear();
+//     const month = months[date.getMonth()];
+//     const day = date.getDate();
+//     // const hour = date.getHours();
+//     // const min = date.getMinutes();
+//     // const sec = date.getSeconds();
+//     const time = `${month} ${day}, ${year}`;
+//     return time;
+// }
+
 
 const logout = () => {
 
