@@ -44,6 +44,13 @@ const createPost = () => {
         })
 }
 
+let uploadPicBtn = document.getElementById('profilePicture');
+
+uploadPicBtn.addEventListener('click', (e) => {
+    console.log('labas');
+    // addProfileImage();
+})
+
 
 const addProfileImage = () => {
 
@@ -295,18 +302,18 @@ const toAddPicture = () => {
 }
 
 const renderAllPosts = (postArr) => {
-​
+
     const allPostsContainer = document.getElementById('list');
     allPostsContainer.textContent = null;
-​
+
     postArr.forEach(obj => {
-​
+
         const postContainer = document.createElement('div');
         postContainer.classList.add('post-container');
         postContainer.id = obj._id;
         //postContainer.dataset.postID = obj._id;
         
-​
+
         const userBar = document.createElement('p')
         const image = document.createElement('img');
         const buttonsBar = document.createElement('p')
@@ -315,16 +322,16 @@ const renderAllPosts = (postArr) => {
         const dateBar = document.createElement('p');
         const commentListSection = document.createElement('div');
         const newCommentContainer = document.createElement('div');
-​
+
         //userBar content
         userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
         postContainer.appendChild(userBar);
-​
+
         //image content
         image.src = obj.imageURL;
         image.style.width = '300px';
         postContainer.appendChild(image);
-​
+
         //buttonsBar content
         const likeButton = document.createElement('button');
         const commentButton = document.createElement('button');
@@ -334,26 +341,26 @@ const renderAllPosts = (postArr) => {
         commentButton.textContent = 'Comment';
         editButton.textContent = 'Edit';
         deleteButton.textContent = 'Delete';
-​
+
         buttonsBar.appendChild(likeButton);
         buttonsBar.appendChild(commentButton);
         buttonsBar.appendChild(editButton);
         buttonsBar.appendChild(deleteButton);
-​
+
         postContainer.appendChild(buttonsBar);
-​
+
         //likesBar content
         likesBar.textContent = `Likes: ${obj.likes}`;
         postContainer.appendChild(likesBar);
-​
+
         //caption content
         caption.textContent = `Caption: ${obj.caption}`;
         postContainer.appendChild(caption);
-​
+
         //date content
         dateBar.textContent = `date: ${unixToDate(obj.date)}`;
         postContainer.appendChild(dateBar);
-​
+
         //commentListSection content
         const viewAllCommentsButton = document.createElement('button');
         viewAllCommentsButton.textContent = 'View all comments';
@@ -363,43 +370,42 @@ const renderAllPosts = (postArr) => {
         ////renderAllComments(obj.latestComments, commentListSection)
         
         //console.log(obj.latestComments)
-​
+
         viewAllCommentsButton.addEventListener('click', (event) => {
-​
+
             viewAllCommentsButton.style.display = 'none';
             getAllPostComments(obj._id, commentListSection);
-​
+
         })
-​
+
         postContainer.appendChild(viewAllCommentsButton);
         postContainer.appendChild(commentListSection);
-​
+
         //commentInput section
         newCommentContainer.classList.add('new-comment-container');
-​
+
         const addCommentInput = document.createElement('input');
         addCommentInput.placeholder = 'Add a comment...'
         newCommentContainer.appendChild(addCommentInput);
-​
+
         const addCommentButton = document.createElement('button');
         addCommentButton.textContent = 'POST';
         newCommentContainer.appendChild(addCommentButton);
-​
+
         addCommentButton.addEventListener('click', event => {
         
             viewAllCommentsButton.style.display = 'none'
             createComment(obj._id, addCommentInput.value, commentListSection);
-​
-​
+
+
         })
-​
+
         postContainer.appendChild(newCommentContainer);
-​
+
         allPostsContainer.appendChild(postContainer);
     });
 }
-
-const renderAllPostImages = () => {
+const renderAllPostImages = (postArr) => {
   
     const allPostsContainer = document.getElementById('list');
     allPostsContainer.textContent = null;
