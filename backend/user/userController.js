@@ -129,6 +129,7 @@ const getAllPostsById = async (req, res) => {
     } catch (err) {
         res.status(400).json(err);
     }
+};
 
 const getLoggedUserInfo = async (req,res)=>{
     try {
@@ -154,7 +155,6 @@ const getLoggedUserInfo = async (req,res)=>{
 }
 
 module.exports = {
-
     register,
     getAll,
     getSingleUser,
@@ -164,4 +164,4 @@ module.exports = {
     addProfileImage,
     getAllPostsById,
     getUserName
-};
+}

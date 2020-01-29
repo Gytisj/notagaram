@@ -46,39 +46,39 @@ const createPost = () => {
 
 
 
-const createPost = () => {
+// const createPost = () => {
 
-    let token = localStorage.getItem('x-auth');
-    let image = document.getElementById('newPostImage');
-    let caption = document.getElementById('newPostCaption').value
+//     let token = localStorage.getItem('x-auth');
+//     let image = document.getElementById('newPostImage');
+//     let caption = document.getElementById('newPostCaption').value
 
-    let data = new FormData();
-    data.append('picture', image.files[0]);
-    data.append('caption', caption);
+//     let data = new FormData();
+//     data.append('picture', image.files[0]);
+//     data.append('caption', caption);
 
 
-    fetch('http://localhost:2000/api/v1/postList/addPost', {
-            method: 'POST',
-            body: data,
-            headers: {
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-            return header;
-        })
-        .then(response => {
-            alert('Item added');
-            getAllPosts();
-        })
-        .catch(e => {
-            console.log(e)
-            alert('Item failed')
-        })
-}
+//     fetch('http://localhost:2000/api/v1/postList/addPost', {
+//             method: 'POST',
+//             body: data,
+//             headers: {
+//                 'x-auth': token
+//             }
+//         })
+//         .then(header => {
+//             if (!header.ok) {
+//                 throw Error(header)
+//             }
+//             return header;
+//         })
+//         .then(response => {
+//             alert('Item added');
+//             getAllPosts();
+//         })
+//         .catch(e => {
+//             console.log(e)
+//             alert('Item failed')
+//         })
+// }
 
 let uploadPicBtn = document.getElementById('profilePicture');
 
