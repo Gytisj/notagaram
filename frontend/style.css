@@ -1,5 +1,5 @@
 body {
-  background-color: #fafafa
+  background-color: #fafafa;
 }
 
 input {
@@ -27,8 +27,6 @@ input {
   padding-bottom: 40px;
 }
 
-
-
 .createItemContainer button {
   width: 100px;
 }
@@ -39,10 +37,25 @@ input {
   right: 10px;
 }
 
-
 /* styles for testing */
 .post-container {
   margin-bottom: 10px;
   border: 1px solid black;
   padding: 5px;
+}
+
+#likesBarTag {
+  position: relative;
+}
+
+.like_container {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  left: 50;
+  top: 0;
+  border: 1px solid black;
 }
