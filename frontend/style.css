@@ -1,54 +1,6 @@
-body {
-  background-color: #fafafa;
-}
-
-input {
-  width: 100%;
-  margin-bottom: 5px;
-  border-radius: 4px;
-  border: 1px solid #0a0a0a;
-  padding: 5px;
-}
-
-.formContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.formContainer .card {
-  width: 200px;
-}
-
-.createItemContainer:first-child {
-  margin-bottom: 40px;
-  border-bottom: 1px solid black;
-  padding-bottom: 40px;
-}
-
-.createItemContainer button {
-  width: 100px;
-}
-
-.logout {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-/* styles for testing */
-.post-container {
-  margin-bottom: 10px;
-  border: 1px solid black;
-  padding: 5px;
-}
-
-#likesBarTag {
-  position: relative;
-}
-
-.like_container {
+body #likesBarTag {
+  position: relative; }
+body .like_container {
   width: 100px;
   height: 100px;
   position: absolute;
@@ -57,5 +9,102 @@ input {
   padding: 0;
   left: 50;
   top: 0;
-  border: 1px solid black;
-}
+  border: 1px solid black; }
+body ul {
+  list-style-type: none;
+  padding: 0; }
+body .row {
+  margin: 0px; }
+body #myTab {
+  display: flex;
+  justify-content: center; }
+body .profileHeader {
+  font-size: 65px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+body header {
+  font-family: 'Rochester', cursive;
+  border-bottom: 1px solid grey; }
+  body header .logout {
+    position: absolute;
+    top: 20px;
+    right: 20px; }
+  body header #headerProfile {
+    height: 40px; }
+body .feedHeader {
+  height: 114px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; }
+  body .feedHeader .notagram {
+    font-size: 55px; }
+body .profile {
+  display: flex;
+  margin-bottom: 100px; }
+  body .profile #profilePhoto {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin-left: 40px;
+    margin-top: 70px; }
+  body .profile #nameAndEditDisplay {
+    width: 100%;
+    margin-left: 60px;
+    margin-top: 75px; }
+    body .profile #nameAndEditDisplay #usernameForEdit {
+      font-size: 40px; }
+    body .profile #nameAndEditDisplay #editBtn {
+      border: 1px solid #E4E4E4;
+      border-radius: 5px;
+      width: 95%;
+      height: 60px;
+      margin-right: 35px;
+      font-size: 25px; }
+body #profileInfo {
+  border-top: 1px solid #E4E4E4;
+  border-bottom: 1px solid #E4E4E4;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 15px; }
+  body #profileInfo #posts, body #profileInfo #following, body #profileInfo #followers {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    body #profileInfo #posts #number, body #profileInfo #following #number, body #profileInfo #followers #number {
+      font-weight: 600;
+      color: #262626;
+      font-size: 40px;
+      margin-bottom: 0; }
+    body #profileInfo #posts #infoP, body #profileInfo #following #infoP, body #profileInfo #followers #infoP {
+      font-size: 25px;
+      color: #B6B6B6; }
+body .card {
+  border: none; }
+body .myFeed {
+  margin: 0px;
+  padding: 5; }
+body .footerborder {
+  border-bottom: 1px solid grey;
+  position: absolute;
+  left: 0;
+  bottom: 105px;
+  width: 100%; }
+body footer {
+  background-color: white;
+  z-index: 6;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  height: 70px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: hidden; }
+  body footer #footer {
+    height: 100%; }
+
+/*# sourceMappingURL=style.css.map */

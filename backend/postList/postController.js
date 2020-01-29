@@ -1,25 +1,31 @@
-const PostModel = require("./postModel");
+
+const PostModel = require('./postModel');
 const date = new Date();
 
 const addPost = (req, res) => {
-  const imgFile = req.file;
-  const data = req.body;
-  const newPost = new PostModel();
 
-  //console.log(req.user)
-  newPost.imageURL = `http://localhost:2000/${imgFile.path}`;
-  newPost.caption = data.caption;
-  newPost.username = req.user.username;
-  newPost.userID = req.user._id;
-  newPost.date = date.getTime();
+    const imgFile = req.file;
+    const data = req.body;
+    const newPost = new PostModel();
 
-  console.log(newPost.imageURL);
+    //console.log(req.user)
+    newPost.imageURL = `http://localhost:2000/${imgFile.path}`;
+    newPost.caption = data.caption;
+    newPost.username = req.user.username;
+    newPost.userID = req.user._id;
 
-  newPost
-    .save()
-    .then(createdPost => {
-      console.log(createdPost);
-      res.status(200).json(createdPost);
+    newPost.date = date.getTime();
+    // newPost.latestComments = []
+
+    newPost.save()
+      .then((createdPost) => {
+        //console.log(createdPost);
+
+        res.status(200).json(createdPost);
+    }).catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+
     })
     .catch(err => {
       res.status(400).json(err);
@@ -53,15 +59,44 @@ const getAllLikes = async (req, res) => {
 
 //post list by user ID
 const getAllPosts = async (req, res) => {
-  try {
-    const postList = await PostModel.find({
-      userID: req.user._id
-    });
-    res.json(postList);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-};
+
+    try {
+        const postList = await PostModel.find({
+            userID: req.user._id
+        }).populate({path:'latestComments',
+            // options: { 
+            //     limit: 2,
+            //     sort: { _id : -1}
+            // }
+
+        })
+
+        res.json(postList)
+
+
+    } catch (err) {
+        res.status(400).json(err);
+    }
+
+}
+
+
+const getAllPostsById = async (req, res) => {
+
+    let id = req.params.id;
+
+    try {
+        const postList = await PostModel.find({
+            userID: id
+        })
+        res.json(postList.length);
+
+
+    } catch (err) {
+        res.status(400).json(err);
+    }
+
+}
 
 //unused
 const getSingleList = async (req, res) => {
@@ -98,12 +133,16 @@ const findOneAndUpdate = async (req, res) => {
 };
 
 module.exports = {
-  addPost,
-  getAllPosts,
-  addLike,
-  getAllLikes
 
-  // getSingleList,
-  // findOneAndRemove,
-  // findOneAndUpdate
-};
+    addPost,
+    getAllPosts,
+    getAllPostsById,
+    addLike,
+    getAllLikes
+
+    // getSingleList,
+    // findOneAndRemove,
+    // findOneAndUpdate
+
+}
+

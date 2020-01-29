@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+
+<body>
+    <header class="feedHeader">
+            <div class="headerProfile" id="profile">
+                    <a onclick="toProfile()"><img id='headerProfile' src="./png's/user.svg" alt="home"></a>
+                </div>
+        <h1 class="notagram">Notagram</h1>
+        <div class="headerProfile" id="profile">
+                <a onclick="toProfile()"><img id='headerProfile' src="./png's/user.svg" alt="home"></a>
+            </div>
+    </header>
+
+    <div id="profilePopUp">
+        <div id="photoPlace"></div>
+        <div id="userInfo"></div>
+    </div>
+
+    <div class="sidenav_right" data-sidenavright="">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" onclick="checkifLoggedIn1()">
+                <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab"
+                    aria-controls="activity" aria-selected="true">Following Feed</a>
+            </li>
+            <li class="nav-item" onclick="getAllFeedPosts()">
+                <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab"
+                    aria-controls="settings" aria-selected="false">Discovery Feed</a>
+            </li>
+        </ul>
+        <div class="tab-content about" id="myTabContent">
+            <div class="tab-pane fade about_me active show" id="activity" role="tabpanel"
+                aria-labelledby="activity-tab">
+                <div class="container">
+                    <div class="col createItemContainer">
+                        <div class="card" style="width:100%">
+                            <ul class="list-group" id="list">
+
+                            </ul>
+                            <button id="loadMore" class="loadMore">Load More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade about_me" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <div class="container">
+                            <div class="col createItemContainer">
+                                <div class="card" style="width:100%">
+                                    <ul class="list-group" id="list1">
+        
+                                    </ul>
+                                    <button id="loadMoreDisc" class="loadMore">Load More</button>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    <div class="footerBorder"></div>
+    <footer>
+            <div class="footerPic" id="home">
+                <a onclick="feed()"><img id='footer' src="./png's/home-run.svg" alt="home"></a>
+            </div>
+            <div class="footerPic" id="search">
+                <a><img id='footer' src="./png's/search.svg" alt="home"></a>
+            </div>
+            <div class="footerPic" id="addPicture">
+                <a onclick="toProfile()"><img id='footer' src="./png's/add.svg" alt="home"></a>
+            </div>
+            <div class="footerPic" id="likes">
+                <a><img id='footer' src="./png's/heart.svg" alt="home"></a>
+            </div>
+            <div class="footerPic" id="profile">
+                <a onclick="toProfile()"><img id='footer' src="./png's/user.svg" alt="home"></a>
+            </div>
+          </footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/ionicons@4.5.9-1/dist/ionicons.js"></script>
+<script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
+<script src="./js/feed.js"></script>
+
+
+</html>

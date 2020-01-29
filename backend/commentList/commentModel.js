@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const date = new Date();
 
+
 const commentSchema = new mongoose.Schema({
     date :{
         type: Number,
@@ -12,14 +13,14 @@ const commentSchema = new mongoose.Schema({
     commentOfText: {
         type: String,
     },
-    postId: {
+    postID: {
         type: String,
     },
-    userId: {
+    userID: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    userName: {
+    username: {
         type: String
     }
 })
