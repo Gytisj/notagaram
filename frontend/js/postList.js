@@ -10,6 +10,7 @@ const checkifLoggedIn = () => {
     }
 }
 
+
 const createPost = () => {
 
     let token = localStorage.getItem('x-auth');
