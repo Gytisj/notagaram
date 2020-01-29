@@ -1,14 +1,49 @@
 const checkifLoggedIn = () => {
-    const token = localStorage.getItem('x-auth');
+  const token = localStorage.getItem("x-auth");
 
-    if (!token) {
-        alert('Redirecting to login');
-        window.location.href = "/login.html";
+  if (!token) {
+    alert("Redirecting to login");
+    window.location.href = "/login.html";
+  } else {
+    //getItems();
+  }
+};
 
-    } else {
-        getAllPosts();
+
+const createPost = () => {
+  let token = localStorage.getItem("x-auth");
+  let image = document.getElementById("newPostImage");
+  let caption = document.getElementById("newPostCaption").value;
+
+  let data = new FormData();
+  data.append("picture", image.files[0]);
+  data.append("caption", caption);
+
+  fetch("http://localhost:2000/api/v1/postList/addPost", {
+    method: "POST",
+    body: data,
+    headers: {
+      "x-auth": token
     }
-}
+  })
+    .then(header => {
+      console.log(header);
+      if (!header.ok) {
+        throw Error(header);
+      }
+      return header;
+    })
+    .then(response => {
+      alert("Item added");
+
+      getAllPosts();
+    })
+    .catch(e => {
+      console.log(e);
+      alert("Item failed");
+    });
+};
+
 
 
 const createPost = () => {
@@ -353,6 +388,16 @@ const renderAllPosts = (postArr) => {
         //likesBar content
         likesBar.textContent = `Likes: ${obj.likes}`;
         postContainer.appendChild(likesBar);
+      likesBar.setAttribute("id", "likesBarTag");
+
+    likesBar.addEventListener("click", event => {
+      renderLikes(obj._id);
+    });
+
+    likeButton.addEventListener("click", event => {
+      addLike(obj._id);
+    });
+
 
         //caption content
         caption.textContent = `Caption: ${obj.caption}`;
@@ -427,6 +472,67 @@ const renderAllPostImages = (postArr) => {
     });
 
 }
+
+const addLike = (id) => {
+  let token = localStorage.getItem("x-auth");
+  let body = { id };
+  console.log(id);
+  fetch(`http://localhost:2000/api/v1/postList/addLike/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth": token
+    }
+  })
+    .then(header => {
+      if (!header.ok) {
+        throw Error(header);
+      }
+
+      //console.log(token);
+      return header.json();
+    })
+    .then(response => {
+      //console.log(response)
+      alert("Event status updated!");
+    })
+    .catch(e => {
+      console.log(e);
+      alert("Event set failled!");
+    });
+};
+
+const renderLikes = (id) => {
+  const like_container = document.createElement("div");
+  document.getElementById("likesBarTag").appendChild(like_container);
+  like_container.classList.add("like_container");
+  let token = localStorage.getItem("x-auth");
+  fetch(`http://localhost:2000/api/v1/postList/getAllLikes/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth": token
+    }
+  })
+    .then(header => {
+      if (!header.ok) {
+        throw Error(header);
+      }
+
+      //console.log(token);
+
+      return header.json();
+    })
+    .then(response => {
+      console.log(response);
+      alert("Event status updated!");
+    })
+    .catch(e => {
+      console.log(e);
+      alert("Event set failled!");
+    });
+};
 
 const renderAllComments = (commentsArr, commetsContainer) => {
     //console.log('commentsArr', commentsArr)
@@ -512,10 +618,9 @@ const renderAllComments = (commentsArr, commetsContainer) => {
         }
         
         commetsContainer.appendChild(commentLine);
-
-        
     });
-}
+};
+
 
 const renderSingleComment = (commentObj) => {
     const comment = document.getElementById(commentObj._id).getElementsByClassName("comment-text")[0]
@@ -576,33 +681,34 @@ const renderLatestComments = (commentsArr) => {
 
 
 const logout = () => {
+  const token = localStorage.getItem("x-auth");
 
-    const token = localStorage.getItem('x-auth');
+  fetch("http://localhost:2000/api/v1/user/logout", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth": token
+    }
+  })
+    .then(header => {
+      if (!header.ok) {
+        throw Error(header);
+      }
 
-    fetch('http://localhost:2000/api/v1/user/logout', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth': token
-            }
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-
-            return header.json();
-        })
-        .then(response => {
-            localStorage.removeItem('x-auth');
-            alert('LOGOUT: successful');
-            window.location.href = "/login.html";
-        })
-        .catch(e => {
-            console.log(e)
-            alert('LOGOUT: failed!')
-        })
-}
+      return header.json();
+    })
+    .then(response => {
+      localStorage.removeItem("x-auth");
+      //console.log(response)
+      //getItems();
+      alert("LOGOUT: successful");
+      window.location.href = "/login.html";
+    })
+    .catch(e => {
+      console.log(e);
+      alert("LOGOUT: failed!");
+    });
+};
 
 
 const feed = () => {

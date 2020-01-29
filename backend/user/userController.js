@@ -5,17 +5,20 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config.js');
 
 const register = (req, res) => {
-    let data = req.body;
-    let user = new User();
-    user.username = data.username;
-    user.fullName = data.fullName;
-    user.password = data.password;
-    user.save().then((createdUser) => {
-        res.json(createdUser)
-    }).catch((err) => {
-        res.status(400).json(err);
+  let data = req.body;
+  let user = new User();
+  user.username = data.username;
+  user.fullName = data.fullName;
+  user.password = data.password;
+  user
+    .save()
+    .then(createdUser => {
+      res.json(createdUser);
     })
-}
+    .catch(err => {
+      res.status(400).json(err);
+    });
+};
 
 const addProfileImage = async (req,res)=>{
     const imgFile = req.file;
@@ -34,39 +37,42 @@ const addProfileImage = async (req,res)=>{
 
 
 const getAll = async (req, res) => {
-    try {
-        let users = await User.find()
-        res.json(users)
-    } catch (err) {
-        res.status(400).json(err);
-    }
-
-}
+  try {
+    let users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
 const logout = (req, res) => {
-    let token = req.token
-    let user = req.user
-    user.update({
+  let token = req.token;
+  let user = req.user;
+  user
+    .update({
       $pull: {
         tokens: {
           token
         }
       }
-    }).then(() => {
-      res.json("logged out")
-    }).catch(e => res.status(400).json(e))
-  }
+    })
+    .then(() => {
+      res.json("logged out");
+    })
+    .catch(e => res.status(400).json(e));
+};
 
 const getSingleUser = async (req, res) => {
-    let id = req.params.id;
-    try {
-        let user = await User.findById(id);
-        user ? res.json(user) : res.json('No such user');
-    } catch (err) {
-        res.status(400).json(err);
-    }
+  let id = req.params.id;
+  try {
+    let user = await User.findById(id);
+    user ? res.json(user) : res.json("No such user");
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
-}
+const getUserName = async (req, res) => {};
 
 const login = async (req, res) => {
 
@@ -107,6 +113,7 @@ const login = async (req, res) => {
     }
 }
 
+
 //post list by user ID
 const getAllPostsById = async (req, res) => {
 
@@ -122,8 +129,6 @@ const getAllPostsById = async (req, res) => {
     } catch (err) {
         res.status(400).json(err);
     }
-
-}
 
 const getLoggedUserInfo = async (req,res)=>{
     try {
@@ -149,6 +154,7 @@ const getLoggedUserInfo = async (req,res)=>{
 }
 
 module.exports = {
+
     register,
     getAll,
     getSingleUser,
@@ -156,5 +162,6 @@ module.exports = {
     logout,
     getLoggedUserInfo,
     addProfileImage,
-    getAllPostsById
+    getAllPostsById,
+    getUserName
 };

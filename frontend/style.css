@@ -1,3 +1,15 @@
+body #likesBarTag {
+  position: relative; }
+body .like_container {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  left: 50;
+  top: 0;
+  border: 1px solid black; }
 body ul {
   list-style-type: none;
   padding: 0; }
