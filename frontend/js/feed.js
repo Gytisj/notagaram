@@ -8,8 +8,10 @@ const renderAllFollowingPosts = (postArr, location) => {
         const postContainer = document.createElement('li');
         postContainer.classList.add('post-container');
         postContainer.dataset.postID = obj._id;
+        let userid = obj.userID;
 
-        const userBar = document.createElement('p')
+        const userBar = document.createElement('p');
+        userBar.setAttribute('onclick', `userPopUp('${userid}')`);
         const image = document.createElement('img');
         const buttonsBar = document.createElement('p')
         const likesBar = document.createElement('p');
@@ -18,7 +20,7 @@ const renderAllFollowingPosts = (postArr, location) => {
         const commentListSection = document.createElement('div');
 
         //userBar content
-        userBar.innerHTML = `<p><a id='profileOpen' href=''>Username: ${obj.username}</a> | UserID: ${obj.userID} | PostID: ${obj._id}</p>`;
+        userBar.textContent = `${obj.username}`;
         postContainer.appendChild(userBar);
 
         //image content
@@ -111,7 +113,7 @@ btn.forEach((e) => {
     })
 })
 
-const getAllPosts = () => {
+const getAllFeedPosts = () => {
 
     const token = localStorage.getItem('x-auth');
     let list = document.getElementById('list1');
@@ -166,7 +168,7 @@ const getAllFollowPosts = () => {
         })
 }
 
-const checkifLoggedIn = () => {
+const checkifLoggedIn1 = () => {
     const token = localStorage.getItem('x-auth');
 
     if (!token) {
@@ -177,5 +179,117 @@ const checkifLoggedIn = () => {
         getAllFollowPosts();
     }
 };
-checkifLoggedIn();
+
+const userPopUp = (userId) => {
+
+    fetch(`http://localhost:2000/api/v1/user/getSingleUser/${userId}`, {
+            method: 'GET'
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            getAllPostsById(response);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+}
+const getAllPostsById = (userObj) => {
+    
+    let id = userObj._id;
+
+    fetch(`http://localhost:2000/api/v1/postList/getAllPostsUserPosts/${id}`, {
+            method: 'GET'
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+
+            return header.json();
+        })
+        .then(response => {
+            renderProfilePopUp(response, userObj);
+            
+        })
+        .catch(e => {
+            console.log(e)
+            //alert('FUCK ! WE FAILLED')
+        })
+}
+
+// const renderProfilePopUp = (postCount, userObj) => {
+    
+//     let image = userObj.imageURL;
+//     let fullName = userObj.fullName;
+//     let followers = userObj.followers.length;
+//     let following = userObj.following.length;
+//     let username = userObj.username;
+//     let postNumber = postCount;
+
+//     let userDiv = document.getElementById('userInfo');
+//     // userDiv.style.position = 'absolute';
+
+//     let userPopUpDiv = document.createElement('div')
+//     userPopUpDiv.setAttribute('id', 'popUpDiv');
+//     userPopUpDiv.classList.add('show', 'hide');
+
+//     let followBtn = document.createElement('button');
+//     followBtn.textContent = 'Follow';
+
+//     userDiv.appendChild(userPopUpDiv);
+
+//     let fullNameDiv = document.createElement('div');
+//     fullNameDiv.setAttribute('id', 'usernameAndFollowBtn');
+//      let nameP = document.createElement('h3');
+//      nameP.setAttribute('id', 'usernameH3');
+//      nameP.textContent = `${username}`;
+//      fullNameDiv.appendChild(nameP);
+//      fullNameDiv.appendChild(followBtn);
+//      userPopUpDiv.appendChild(fullNameDiv);
+     
+
+//      let statDiv = document.createElement('div');
+//      statDiv.setAttribute('id', 'statdiv');
+//      let followersCount = document.createElement('p');
+//      followersCount.setAttribute('id', 'infoP');
+//      let followingCount = document.createElement('p');
+//      followingCount.setAttribute('id', 'infoP');
+//      let posterCounter = document.createElement('p');
+//      posterCounter.setAttribute('id', 'infoP');
+//      followersCount.textContent = `Followers: ${followers}`;
+//      followingCount.textContent = `Following: ${following}`;
+//      posterCounter.textContent = `Posts: ${postNumber}`
+//      let nameDisplayDiv = document.createElement('p');
+//      nameDisplayDiv.setAttribute('id', 'fullName');
+//      nameDisplayDiv.style.fontSize = '20px';
+//      nameDisplayDiv.textContent = fullName;
+//      statDiv.appendChild(posterCounter);
+//      statDiv.appendChild(followersCount);
+//      statDiv.appendChild(followingCount);
+//      userDiv.appendChild(statDiv);
+//      userDiv.appendChild(nameDisplayDiv);
+
+//     if (image) {
+
+//         let imagePlace = document.getElementById('photoPlace');
+
+//         //Image upload
+//         let imgTag = document.createElement('img');
+//         imgTag.src = image;
+//         imgTag.style.width = '150px';
+//         imgTag.style.height = '150px';
+//         imgTag.style.borderRadius = '50%';
+    
+//         imagePlace.appendChild(imgTag);
+
+//     }
+
+// }
+
+checkifLoggedIn1();
 

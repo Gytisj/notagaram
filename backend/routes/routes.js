@@ -26,7 +26,7 @@ const upload = multer({
 //user routes
 router.post('/user/register', userController.register);
 //router.get('/user/getAllUsers', userController.getAll);
-//router.get('/user/getSingleUser/:id', userController.getSingleUser);
+router.get('/user/getSingleUser/:id', userController.getSingleUser);
 router.get('/user/getFullName', middleware.authenticate, userController.getLoggedUserInfo);
 router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
@@ -37,6 +37,7 @@ router.get('/user/getAllPostsById', middleware.authenticate, userController.getA
 router.post('/postList/addPost', upload.single('picture'), middleware.authenticate, postController.addPost);
 router.get('/postList/getAllPosts', middleware.authenticate, postController.getAllPosts);
 router.get('/postList/getAllFollowerPosts/:pageNumber', middleware.authenticate, feedController.getAllFollowingPosts);
+router.get('/postList/getAllPostsUserPosts/:id', postController.getAllPostsById);
 
 //Feed routes
 router.get('/feedList/getAllPosts/:pageNumber', middleware.authenticate, feedController.getAllPosts);

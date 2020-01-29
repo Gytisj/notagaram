@@ -14,15 +14,14 @@ const getLoggedUserInfo = () =>{
             return header.json();
         })
         .then(response => {
-            // console.log(response);
-            getAllPostsById(response);
+            getAllPostsById1(response);
         })
         .catch(e => {
             console.log(e);
         })
 }
 
-const getAllPostsById = (userObj) => {
+const getAllPostsById1 = (userObj) => {
     console.log('GETING POSTS BY ID');
 
 
@@ -71,10 +70,8 @@ const renderProfileInfo = (posts, userObj) => {
 
         //Image upload
         let imgTag = document.createElement('img');
+        imgTag.setAttribute('id', 'profilePhoto');
         imgTag.src = userObj.image;
-        imgTag.style.width = '150px';
-        imgTag.style.height = '150px';
-        imgTag.style.borderRadius = '50%';
         
         let imageDiv = document.getElementById('profilePic');
         imageDiv.appendChild(imgTag);
@@ -85,33 +82,43 @@ const renderProfileInfo = (posts, userObj) => {
 
 const profileStatsRender = (fullName, followers, following, username, posts) => {
      //User Info display
-     let userInfoDiv = document.getElementById('profileInfo');
-     let fullNameDiv = document.createElement('div');
-     let nameP = document.createElement('h3');
-     nameP.textContent = `Hey, ${username}`;
-     fullNameDiv.appendChild(nameP);
-     userInfoDiv.appendChild(fullNameDiv);
+     let usernameDiv = document.getElementById('username');
 
-     let statDiv = document.createElement('div');
-     statDiv.setAttribute('id', 'statdiv');
+     let nameP = document.createElement('p');
+     nameP.setAttribute('id', 'usernameForEdit');
+     let headerName = document.getElementById('headerName');
+     headerName.textContent = `${username}`
+     nameP.textContent = `${username}`;
+     usernameDiv.appendChild(nameP);
+
+    let postsDiv = document.getElementById('posts');
+    let followersDiv = document.getElementById('followers');
+    let followingDiv = document.getElementById('following');
      let followersCount = document.createElement('p');
-     followersCount.setAttribute('id', 'infoP');
+     followersCount.setAttribute('id', 'number');
      let followingCount = document.createElement('p');
-     followingCount.setAttribute('id', 'infoP');
+     followingCount.setAttribute('id', 'number');
      let postCount = document.createElement('p');
-     postCount.setAttribute('id', 'infoP');
-     followersCount.textContent = `Followers: ${followers}`;
-     followingCount.textContent = `Following: ${following}`;
-     postCount.textContent = `Posts: ${posts}`
-     let nameDisplayDiv = document.createElement('p');
-     nameDisplayDiv.setAttribute('id', 'fullName');
-     nameDisplayDiv.style.fontSize = '20px';
-     nameDisplayDiv.textContent = fullName;
-     statDiv.appendChild(followersCount);
-     statDiv.appendChild(followingCount);
-     statDiv.appendChild(postCount);
-     userInfoDiv.appendChild(statDiv);
-     userInfoDiv.appendChild(nameDisplayDiv);
+     postCount.setAttribute('id', 'number');
+     let followersCountText = document.createElement('p');
+     followersCountText.setAttribute('id', 'infoP');
+     let followingCountText = document.createElement('p');
+     followingCountText.setAttribute('id', 'infoP');
+     let postCountText = document.createElement('p');
+     postCountText.setAttribute('id', 'infoP');
+     followersCountText.textContent = 'Followers';
+     followingCountText.textContent = 'Following';
+     postCountText.textContent = 'Posts';
+     followersCount.innerHTML = `${followers}`;
+     followingCount.innerHTML = `${following}`;
+     postCount.innerHTML = `${posts}`;
+     postsDiv.appendChild(postCount);
+     postsDiv.appendChild(postCountText);
+     followersDiv.appendChild(followersCount);
+     followersDiv.appendChild(followersCountText);
+     followingDiv.appendChild(followingCount);
+     followingDiv.appendChild(followingCountText);
+
 }
 
 getLoggedUserInfo();

@@ -199,6 +199,10 @@ const getAllPostComments = (postID) => {
         })
 }
 
+const toAddPicture = () => {
+    window.location.href = '/uploadPic.html';
+}
+
 const renderAllPosts = (postArr) => {
 
     const allPostsContainer = document.getElementById('list');
@@ -208,71 +212,72 @@ const renderAllPosts = (postArr) => {
         
         //postContainer
         const postContainer = document.createElement('li');
-        postContainer.classList.add('col', 'col-4', 'myFeed');
-        postContainer.dataset.postID = obj._id;
+        postContainer.classList.add('col-4', 'myFeed');
+        // postContainer.dataset.postID = obj._id;
 
-        const userBar = document.createElement('p')
+        // const userBar = document.createElement('p')
         const image = document.createElement('img');
-        const buttonsBar = document.createElement('p')
-        const likesBar = document.createElement('p');
-        const caption = document.createElement('p');
-        const dateBar = document.createElement('p');
-        const commentListSection = document.createElement('div');
+        image.setAttribute('id', 'myOwnPicture');
+        // const buttonsBar = document.createElement('p')
+        // const likesBar = document.createElement('p');
+        // const caption = document.createElement('p');
+        // const dateBar = document.createElement('p');
+        // const commentListSection = document.createElement('div');
 
         //userBar content
-        userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
-        postContainer.appendChild(userBar);
+        // userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
+        // postContainer.appendChild(userBar);
 
         //image content
         image.src = obj.imageURL;
-        image.style.width = '250px';
-        image.style.height = '200px';
+        image.style.width = '100%';
+        image.style.height = '300px';
         postContainer.appendChild(image);
 
         //buttonsBar content
-        const likeButton = document.createElement('button');
-        const commentButton = document.createElement('button');
-        const editButton = document.createElement('button');
-        const deleteButton = document.createElement('button');
-        likeButton.textContent = 'Like';
-        commentButton.textContent = 'Comment';
-        editButton.textContent = 'Edit';
-        deleteButton.textContent = 'Delete';
+        // const likeButton = document.createElement('button');
+        // const commentButton = document.createElement('button');
+        // const editButton = document.createElement('button');
+        // const deleteButton = document.createElement('button');
+        // likeButton.textContent = 'Like';
+        // commentButton.textContent = 'Comment';
+        // editButton.textContent = 'Edit';
+        // deleteButton.textContent = 'Delete';
 
-        buttonsBar.appendChild(likeButton);
-        buttonsBar.appendChild(commentButton);
-        buttonsBar.appendChild(editButton);
-        buttonsBar.appendChild(deleteButton);
+        // buttonsBar.appendChild(likeButton);
+        // buttonsBar.appendChild(commentButton);
+        // buttonsBar.appendChild(editButton);
+        // buttonsBar.appendChild(deleteButton);
 
-        postContainer.appendChild(buttonsBar);
+        // postContainer.appendChild(buttonsBar);
 
-        //likesBar content
-        likesBar.textContent = `Likes: ${obj.likes}`;
-        postContainer.appendChild(likesBar);
+        // //likesBar content
+        // likesBar.textContent = `Likes: ${obj.likes}`;
+        // postContainer.appendChild(likesBar);
 
-        //caption content
-        caption.textContent =`Caption: ${obj.caption}` ;
-        postContainer.appendChild(caption);
+        // //caption content
+        // caption.textContent =`Caption: ${obj.caption}` ;
+        // postContainer.appendChild(caption);
 
-        //date content
-        dateBar.textContent = `date: ${unixToDate(obj.date)}`;
-        postContainer.appendChild(dateBar);
+        // //date content
+        // dateBar.textContent = `date: ${unixToDate(obj.date)}`;
+        // postContainer.appendChild(dateBar);
 
-        //commentListSection content
-        const viewAllCommentsButton = document.createElement('button');
-        commentListSection.dataset.postID = obj._id;
-        viewAllCommentsButton.textContent = 'View all comments';
+        // //commentListSection content
+        // const viewAllCommentsButton = document.createElement('button');
+        // commentListSection.dataset.postID = obj._id;
+        // viewAllCommentsButton.textContent = 'View all comments';
 
-        viewAllCommentsButton.addEventListener('click', (event) => {
-            getAllPostComments('5e2053181c0c7804804ac508')
+        // viewAllCommentsButton.addEventListener('click', (event) => {
+        //     getAllPostComments('5e2053181c0c7804804ac508')
             
-            // console.log(event.target.parentNode.dataset.postID);
-            // console.log(event);
+        //     // console.log(event.target.parentNode.dataset.postID);
+        //     // console.log(event);
             
-        })
+        // })
 
-        commentListSection.appendChild(viewAllCommentsButton);
-        postContainer.appendChild(commentListSection);
+        // commentListSection.appendChild(viewAllCommentsButton);
+        // postContainer.appendChild(commentListSection);
         allPostsContainer.appendChild(postContainer);
     });
 }
@@ -291,18 +296,18 @@ const renderAllComments = (commentsArr) => {
 
 
 //UNIX timestamp conversion to user friendly date
-const unixToDate = (unixTimestamp) =>{
-    const date = new Date(unixTimestamp);
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const year = date.getFullYear();
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    // const hour = date.getHours();
-    // const min = date.getMinutes();
-    // const sec = date.getSeconds();
-    const time = `${month} ${day}, ${year}`;
-    return time;
-}
+// const unixToDate = (unixTimestamp) =>{
+//     const date = new Date(unixTimestamp);
+//     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//     const year = date.getFullYear();
+//     const month = months[date.getMonth()];
+//     const day = date.getDate();
+//     // const hour = date.getHours();
+//     // const min = date.getMinutes();
+//     // const sec = date.getSeconds();
+//     const time = `${month} ${day}, ${year}`;
+//     return time;
+// }
 
 const logout = () => {
 
