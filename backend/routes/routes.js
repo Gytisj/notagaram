@@ -53,7 +53,10 @@ router.get('/feedList/getAllPosts/:pageNumber', middleware.authenticate, feedCon
 
 //CommentList routes
 router.post('/commentList/addComment', middleware.authenticate, commentController.addComment);
-router.get('/commentList/getComment/:id', commentController.getPostComments);
+router.get('/commentList/getComment/:id', middleware.authenticate, commentController.getPostComments);
+router.get('/commentList/getLatestComments/:id', commentController.getPostLatestComments);
+router.delete('/commentList/deleteComment/:id', middleware.authenticate, commentController.deleteComment )
+router.patch('/commentList/editComment/:id', middleware.authenticate, commentController.editComment )
 
 
 module.exports = router;
