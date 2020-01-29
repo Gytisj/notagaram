@@ -23,6 +23,7 @@
             <li class="nav-item" onclick="getAllPosts()">
                 <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab"
                     aria-controls="settings" aria-selected="false">Discovery Feed</a>
+                    <button id = "followUser" onclick = checkIfFollow()>Follow/Unfollow</button>
             </li>
         </ul>
         <div class="tab-content about" id="myTabContent">
@@ -32,7 +33,6 @@
                     <div class="col createItemContainer">
                         <div class="card" style="width:100%">
                             <ul class="list-group" id="list">
-
                             </ul>
                             <button id="loadMore" class="loadMore">Load More</button>
                         </div>

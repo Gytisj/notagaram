@@ -177,5 +177,86 @@ const checkifLoggedIn = () => {
         getAllFollowPosts();
     }
 };
+
+const follow = ()=>{
+    
+    const token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:2000/api/v1/user/follow/5e31dc8d35c22964fc7fb9a0`, {
+        method: 'PATCH',
+        headers: {
+            'x-auth': token
+        }
+    })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            // console.log(response);
+        })
+        .catch(e => {
+            // console.log(e);
+        })
+}
+
+const unfollow = ()=>{
+    
+    const token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:2000/api/v1/user/unfollow/5e31dc8d35c22964fc7fb9a0`, {
+        method: 'PATCH',
+        headers: {
+            'x-auth': token
+        }
+    })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            // console.log(response);
+        })
+        .catch(e => {
+            // console.log(e);
+        })
+}
+
+const checkIfFollow = () =>{
+
+    const token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:2000/api/v1/user/checkIfFollow/5e31dc8d35c22964fc7fb9a0`, {
+        method: 'GET',
+        headers: {
+            'x-auth': token
+        }
+    })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            if(response.followers.length>0){
+                unfollow();
+            }
+            else if(response.followers.length==0){
+                follow();
+            }
+        })
+        .catch(e => {
+            console.log(e);
+        })
+}
+
+
+
+
 checkifLoggedIn();
 

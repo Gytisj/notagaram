@@ -189,7 +189,7 @@ const getAllPostComments = (postID) => {
 
             return header.json();
         })
-        .then(response => {
+        .then(response => {POST
             console.log(response);
             
         })
