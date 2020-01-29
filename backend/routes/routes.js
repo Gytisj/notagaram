@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const userController = require('../user/userController.js');
 const postController = require('../postList/postController.js');
+const feedController = require('../feedList/feedController.js');
 const commentController = require('../commentList/commentController.js')
 const middleware = require('../middleware/middleware.js');
 const multer = require('multer');
@@ -26,25 +27,20 @@ const upload = multer({
 router.post('/user/register', userController.register);
 //router.get('/user/getAllUsers', userController.getAll);
 //router.get('/user/getSingleUser/:id', userController.getSingleUser);
+router.get('/user/getFullName', middleware.authenticate, userController.getLoggedUserInfo);
 router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
+router.patch('/user/addProfileImage', upload.single('picture'), middleware.authenticate, userController.addProfileImage);
+router.get('/user/getAllPostsById', middleware.authenticate, userController.getAllPostsById);
 
 //Image upload router
 router.post('/postList/addPost', upload.single('picture'), middleware.authenticate, postController.addPost);
 router.get('/postList/getAllPosts', middleware.authenticate, postController.getAllPosts);
+router.get('/postList/getAllFollowerPosts/:pageNumber', middleware.authenticate, feedController.getAllFollowingPosts);
 
-//Image retrieve route
-// router.get('/photos', (req, res) => {
-//     db.collection('mycollection').find().toArray((err, result) => {
+//Feed routes
+router.get('/feedList/getAllPosts/:pageNumber', middleware.authenticate, feedController.getAllPosts);
 
-//         const imgArray = result.map(element => element._id);
-//         console.log(imgArray);
-
-//         if (err) return console.log(err)
-//         res.send(imgArray)
-
-//     })
-// });
 
 //toDoList routes
 // router.post('/postList/addPost', middleware.authenticate, postController.addPost);

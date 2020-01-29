@@ -2,11 +2,43 @@ body {
   background-color: #fafafa
 }
 
+.uploadPic {
+  display: inline-block;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-around;
+}
+#profilePicture {
+  width: 105px;
+}
+.btn {
+  padding: 0px;
+}
+
+#profileInfo {
+  display: inline-block;
+}
+
+#infoP {
+  margin-right: 5px;
+}
+
+#statdiv {
+  display: flex;
+}
+
 input {
   width: 100%;
   margin-bottom: 5px;
   border-radius: 4px;
   border: 1px solid #0a0a0a;
+  padding: 5px;
+}
+
+.personalFeed {
+  padding: 0px;
   padding: 5px;
 }
 
@@ -22,15 +54,28 @@ input {
 }
 
 .createItemContainer:first-child {
-  margin-bottom: 40px;
-  border-bottom: 1px solid black;
   padding-bottom: 40px;
 }
 
-
+ul {
+  list-style-type: none;
+}
 
 .createItemContainer button {
   width: 100px;
+}
+
+#profileOpen {
+  text-decoration: none;
+  color: black;
+}
+#profileOpen:hover {
+  text-decoration: none;
+  color: pink;
+}
+
+.loadMore {
+  margin: 0 auto;
 }
 
 .logout {
@@ -43,6 +88,21 @@ input {
 /* styles for testing */
 .post-container {
   margin-bottom: 10px;
+  margin-top: 10px;
   border: 1px solid black;
   padding: 5px;
+}
+
+.feedHeader {
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+}
+.container {
+  width: 60%;
 }

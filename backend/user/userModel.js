@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId
         }
     }],
+    imageURL: {
+        type: String,
+        required: false
+    },
     following: [{
         userId: {
             type: mongoose.Schema.Types.ObjectId

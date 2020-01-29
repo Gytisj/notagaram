@@ -10,15 +10,18 @@ const addPost = (req, res) => {
     //console.log(req.user)
     newPost.imageURL = `http://localhost:2000/${imgFile.path}`;
     newPost.caption = data.caption;
-    newPost.username = req.user.username
+    newPost.username = req.user.username;
     newPost.userID = req.user._id;
+
     newPost.date = date.getTime();
     // newPost.latestComments = []
 
     newPost.save().then((createdPost) => {
         //console.log(createdPost);
+
         res.status(200).json(createdPost);
     }).catch((err) => {
+        console.log(err);
         res.status(400).json(err);
     })
 }

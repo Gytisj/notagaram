@@ -20,6 +20,7 @@ const createPost = () => {
     data.append('picture', image.files[0]);
     data.append('caption', caption);
 
+
     fetch('http://localhost:2000/api/v1/postList/addPost', {
             method: 'POST',
             body: data,
@@ -28,7 +29,6 @@ const createPost = () => {
             }
         })
         .then(header => {
-            //console.log(header)
             if (!header.ok) {
                 throw Error(header)
             }
@@ -36,18 +36,45 @@ const createPost = () => {
         })
         .then(response => {
             alert('Item added');
-
             getAllPosts();
-            //console.log(response)
-            // alert('Item added');
-            // window.location.href = '/index.html'
-            // getItems();
+        })
+        .catch(e => {
+            console.log(e)
+            alert('Item failed')
+        })
+}
 
+
+const addProfileImage = () => {
+
+    let token = localStorage.getItem('x-auth');
+    let image = document.getElementById('profilePicture');
+
+    let data = new FormData();
+    data.append('picture', image.files[0]);
+  
+    fetch('http://localhost:2000/api/v1/user/addProfileImage', {
+            method: 'PATCH',
+            body: data,
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header;
+        })
+        .then(response => {
+            location.reload();
         })
         .catch(e => {
             console.log(e)
         })
 }
+
+let postArrLength = 1;
 
 const getAllPosts = () => {
     console.log('GETING POSTS');
@@ -69,9 +96,9 @@ const getAllPosts = () => {
             return header.json();
         })
         .then(response => {
-
-            console.log(response);
             renderAllPosts(response);
+            //postNumber(response);
+            
         })
         .catch(e => {
             console.log(e)
@@ -267,12 +294,12 @@ const renderAllPosts = (postArr) => {
     allPostsContainer.textContent = null;
 
     postArr.forEach(obj => {
-
-        const postContainer = document.createElement('div');
-        postContainer.classList.add('post-container');
-        postContainer.id = obj._id;
-        //postContainer.dataset.postID = obj._id;
         
+        //postContainer
+        const postContainer = document.createElement('li');
+        postContainer.classList.add('col', 'col-4', 'myFeed', 'post-container');
+        postContainer.id = obj._id;
+
 
         const userBar = document.createElement('p')
         const image = document.createElement('img');
@@ -289,7 +316,8 @@ const renderAllPosts = (postArr) => {
 
         //image content
         image.src = obj.imageURL;
-        image.style.width = '300px';
+        image.style.width = '250px';
+        image.style.height = '200px';
         postContainer.appendChild(image);
 
         //buttonsBar content
@@ -340,6 +368,7 @@ const renderAllPosts = (postArr) => {
 
         postContainer.appendChild(viewAllCommentsButton);
         postContainer.appendChild(commentListSection);
+
 
         //commentInput section
         newCommentContainer.classList.add('new-comment-container');
@@ -531,8 +560,6 @@ const logout = () => {
         })
         .then(response => {
             localStorage.removeItem('x-auth');
-            //console.log(response)
-            //getItems();
             alert('LOGOUT: successful');
             window.location.href = "/login.html";
         })
@@ -542,4 +569,9 @@ const logout = () => {
         })
 }
 
-checkifLoggedIn()
+
+const feed = () => {
+    window.location.href = "/feed.html"
+}
+
+checkifLoggedIn();
