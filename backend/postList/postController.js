@@ -1,4 +1,3 @@
-
 const PostModel = require('./postModel');
 const date = new Date();
 
@@ -14,11 +13,10 @@ const addPost = (req, res) => {
     newPost.username = req.user.username
     newPost.userID = req.user._id;
     newPost.date = date.getTime();
-
-    console.log(newPost.imageURL);
+    // newPost.latestComments = []
 
     newPost.save().then((createdPost) => {
-        console.log(createdPost);
+        //console.log(createdPost);
         res.status(200).json(createdPost);
     }).catch((err) => {
         res.status(400).json(err);
@@ -31,7 +29,14 @@ const getAllPosts = async (req, res) => {
     try {
         const postList = await PostModel.find({
             userID: req.user._id
+        }).populate({path:'latestComments',
+            // options: { 
+            //     limit: 2,
+            //     sort: { _id : -1}
+            // }
+
         })
+
         res.json(postList)
 
 

@@ -23,7 +23,11 @@ const postSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
-    }
+    },
+    latestComments: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'commentList'
+    }]
 });
 
 const postModel = mongoose.model('postList', postSchema);
