@@ -1,11 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Rochester&display=swap" rel="stylesheet">
 </head>
-
 
 <body>
     <header class="feedHeader">
@@ -17,23 +18,18 @@
             <a onclick="toProfile()"><img id='headerProfile' src="./png's/user.svg" alt="home"></a>
         </div>
     </header>
-
     <div class="pictureDiv" id="pictureDiv"></div>
-
-
-    <div class="tab-pane fade active show discoveryUl" id="activity" role="tabpanel" aria-labelledby="activity-tab">
-        <div class="containers">
-            <div class="col createItemContainer">
+    <div class="tab-content about" id="myTabContent">
+        <div class="tab-pane fade about_me active show" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+            <div class="createItemContainer">
                 <div class="card" style="width:100%">
-                    <ul class="list-group listFollow" id="list">
+                    <ul class="row personalFeed" id="list1">
 
                     </ul>
-                    <button id="loadMore" class="loadMore">Load More</button>
-
+                    <button id="loadMore1" class="loadMore">Load More</button>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="pushFromBottom"></div>
     <div class="footerBorder"></div>
@@ -68,6 +64,5 @@
 <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
 <script src="./js/feed.js"></script>
 <script src="./js/rotation.js"></script>
-
 
 </html>

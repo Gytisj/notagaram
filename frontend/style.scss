@@ -1,0 +1,240 @@
+body {
+    height: 100%;
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .row {
+        margin: 0px;
+    }
+    #myTab {
+        display: flex;
+        justify-content: center;
+    }
+    .profileHeader {
+        font-size: 65px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .uploadPic {
+        margin-top: 100px;
+        margin-left: 50px;
+    }
+    header {
+        font-family: 'Rochester', cursive;
+        border-bottom: 1px solid grey;
+        
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        #headerProfile {
+            height: 40px;
+            
+        }
+    }
+    .feedHeader {
+        height: 114px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 6;
+        padding: 0 20px;
+        .notagram {
+            font-size: 55px;
+        }
+    }
+    .profile {
+        display: flex;
+        margin-bottom: 100px;
+        #profilePhoto {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-left: 40px;
+            margin-top: 70px;
+        }
+        #nameAndEditDisplay {
+            width: 100%;
+            margin-left: 60px;
+            margin-top: 75px;
+            #usernameForEdit {
+                font-size: 40px;
+            }
+            #editBtn {
+                border: 1px solid #E4E4E4;
+                border-radius: 5px;
+                width: 95%;
+                height: 60px;
+                margin-right: 35px;
+                font-size: 25px;
+            }
+        }
+        
+    }
+    .about_me {
+        display: none;
+    }
+    .col {
+        margin: 0;
+        padding: 0;
+    }
+    .listFollow {
+        #likeAndCommentDiv {
+
+            display: flex;
+            justify-content: space-between;
+
+            img {
+                margin-top: 35px;
+                margin-left: 35px;
+            }
+            p {
+                font-weight: 500;
+                color: #262626;
+                font-size: 50px;
+                margin-top: 35px;
+                margin-right: 35px;
+            }
+        }
+        #userAndBackBtnDiv {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 130px;
+            padding: 20px;
+            p {
+                font-weight: 600;
+                color: #262626;
+                font-size: 40px;
+            }
+            #usernameAndPhoto {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                #userImage {
+                    height: 90px;
+                    width: 90px;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                }
+            }
+            
+        }
+    }
+    #pictureDiv {
+        height: 2000px;
+        width: 100%;
+        background-color: white;
+        z-index: 2;
+        overflow: hidden;
+        #likeAndCommentDiv {
+
+            display: flex;
+            justify-content: space-between;
+
+            img {
+                margin-top: 35px;
+                margin-left: 35px;
+            }
+            p {
+                font-weight: 500;
+                color: #262626;
+                font-size: 50px;
+                margin-top: 35px;
+                margin-right: 35px;
+            }
+        }
+        #userAndBackBtnDiv {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 130px;
+            padding: 20px;
+            p {
+                font-weight: 600;
+                color: #262626;
+                font-size: 40px;
+            }
+            #usernameAndPhoto {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                #userImage {
+                    height: 90px;
+                    width: 90px;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                }
+            }
+            
+        }
+    }
+    .pictureDiv {
+        display: none;
+    }
+    #profileInfo {
+        border-top: 1px solid #E4E4E4;
+        border-bottom: 1px solid #E4E4E4;
+        display: flex;
+        justify-content: space-evenly;
+        padding-top: 15px;
+        #posts, #following, #followers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            #number {
+                font-weight: 600;
+                color: #262626;
+                font-size: 40px;
+                margin-bottom: 0;
+            }
+            #infoP {
+                font-size: 25px;
+                color: #B6B6B6;
+            }
+        }
+    }
+    .card {
+        border: none;
+    }
+    .myFeed {
+        margin: 0px;
+        padding: 5;
+    }
+    .post-container {
+        padding: 5px;
+    }
+    .footerborder {
+        border-bottom: 1px solid grey;
+        position: fixed;
+        left: 0;
+        bottom: 90px;
+        width: 100%;
+    }
+    .pushFromBottom {
+        height: 90px;
+    }
+    footer {
+        background-color: white;
+        z-index: 6;
+        display: flex;
+        justify-content: space-evenly;
+        padding-bottom: 15px;
+        padding-top: 20px;
+        height: 90px;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        overflow: hidden;
+        #footer {
+            height: 100%;
+        }
+    }
+}
+  

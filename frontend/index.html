@@ -4,36 +4,39 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="./style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Rochester&display=swap" rel="stylesheet">
 </head>
 
 
 
 <body>
-  <div class="container">
-  <div class="feed">
-    <a onclick="feed()"><button>
-        FEED
-      </button></a>
-  </div>
-  <div class="logout">
-    <a onclick="logout()"><button>
-        <ion-icon name="walk"></ion-icon>
-      </button></a>
-  </div>
-</div>
-  <div class="container profile">
+  <header class="profileHeader">
+    <p id="headerName"></p>
+    <div class="logout">
+        <a onclick="logout()">
+            <ion-icon name="walk"></ion-icon>
+          </a>
+      </div>
+  </header>
+  <div class="profile">
     <div class="profilePic" id="profilePic">
       <div class="uploadPic" id="uploadPic">
         <p>Upload Profile Picture</p>
         <input type="file" name="myImage" placeholder="image" id="profilePicture" accept="image/*" />
-        <input type="submit" id="profilePicture" class="createItem btn btn-dark" onclick="addProfileImage()" value="Upload Photo"
-              name="picture" />
+        <input type="button" id="profilePicture" class="createItem btn btn-dark" onclick="addProfileImage()"
+          value="Upload Photo" name="picture" />
       </div>
     </div>
-    <div class="profileInfo" id="profileInfo">
-      
+    <div id="nameAndEditDisplay">
+        <div id="username"></div>
+        <button id="editBtn">Edit Profile</button>
     </div>
   </div>
+  <div class="profileInfo" id="profileInfo">
+    <div id="posts"></div>
+    <div id="followers"></div>
+    <div id="following"></div>
+    </div>
   <div class="sidenav_right" data-sidenavright="">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
@@ -47,18 +50,14 @@
     </ul>
     <div class="tab-content about" id="myTabContent">
       <div class="tab-pane fade about_me active show" id="activity" role="tabpanel" aria-labelledby="activity-tab">
-        <div class="container">
           <div class="createItemContainer">
-            <h3>Posts
-            </h3><br />
             <div class="card" style="width:100%">
-              <ul class="row personalFeed" id="list">
+              <ul class="row personalFeed" id="myFeed">
 
               </ul>
             </div>
           </div>
         </div>
-      </div>
       <div class="tab-pane fade about_me" id="settings" role="tabpanel" aria-labelledby="settings-tab">
         <div class="container">
 
@@ -81,6 +80,32 @@
 
 
   </div>
+  <!-- <div class="container">
+      <div class="logout">
+        <a onclick="logout()"><button>
+            <ion-icon name="walk"></ion-icon>
+          </button></a>
+      </div>
+    </div> -->
+    <div class="pushFromBottom"></div>
+    <div class="footerBorder"></div>
+    <footer>
+      <div class="footerPic" id="home">
+          <a onclick="feed()"><img id='footer' src="./png's/home-run.svg" alt="home"></a>
+      </div>
+      <div class="footerPic" id="search">
+          <a onclick="toDiscoveryFeed()"><img id='footer' src="./png's/search.svg" alt="home"></a>
+      </div>
+      <div class="footerPic" id="addPicture">
+          <a onclick="toProfile()"><img id='footer' src="./png's/add.svg" alt="home"></a>
+      </div>
+      <div class="footerPic" id="likes">
+          <a><img id='footer' src="./png's/heart.svg" alt="home"></a>
+      </div>
+      <div class="footerPic" id="profile">
+          <a onclick="toProfile()"><img id='footer' src="./png's/user.svg" alt="home"></a>
+      </div>
+    </footer>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -90,7 +115,9 @@
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/ionicons@4.5.9-1/dist/ionicons.js"></script>
 <script src="https://unpkg.com/parse@2.4.0/dist/parse.js"></script>
-<script src="./js/postList.js"></script>
+<script src="js/postList.js"></script>
 <script src="./js/profileInfo.js"></script>
+<script src="./js/feed.js"></script>
+<script src="./js/rotation.js"></script>
 
 </html>

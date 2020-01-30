@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
@@ -20,9 +21,20 @@ const postSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true
+    },
+    latestComments: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'commentList'
+    }],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users"
     }
+  ]
 });
 
 let postModel = mongoose.model('postList', postSchema);
 
-module.exports = postModel; 
+
+module.exports = postModel;
