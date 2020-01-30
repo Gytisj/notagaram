@@ -34,6 +34,10 @@ router.post('/user/login', userController.login);
 router.get('/user/logout', middleware.authenticate, userController.logout);
 router.patch('/user/addProfileImage', upload.single('picture'), middleware.authenticate, userController.addProfileImage);
 router.get('/user/getAllPostsById', middleware.authenticate, userController.getAllPostsById);
+router.patch('/user/follow/:id', middleware.authenticate, userController.follow);
+router.patch('/user/unfollow/:id', middleware.authenticate, userController.unfollow);
+router.get('/user/checkIfFollow/:id', middleware.authenticate, userController.checkIfFollow);
+
 
 //Image upload router
 router.post('/postList/addPost', upload.single('picture'), middleware.authenticate, postController.addPost);

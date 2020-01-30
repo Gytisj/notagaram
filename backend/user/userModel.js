@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
     },
     followers: [{
         userId: {
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
         }
     }],
     imageURL: {

@@ -188,7 +188,7 @@ const getAllPostComments = (postID, postTagRef) => {
 
             return header.json();
         })
-        .then(response => {
+        .then(response => {POST
             console.log(response);
             
             renderAllComments(response, postTagRef);

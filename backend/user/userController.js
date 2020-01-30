@@ -32,7 +32,6 @@ const addProfileImage = async (req,res)=>{
         console.log(err);
         res.status(400).json(err);
     })
-
 }
 
 
@@ -154,6 +153,57 @@ const getLoggedUserInfo = async (req,res)=>{
     }
 }
 
+const checkIfFollow = async (req,res)=>{
+    let followingId = await req.params.id;
+    let followerId = await req.user._id;
+
+    let checkIfFollow = (await User.findById(followingId)).populate({
+        path: "followers",
+        match: {"userId": followerId}
+    });
+    res.json(checkIfFollow);
+}
+
+const follow = async (req,res)=>{
+    let followingId = await req.params.id;
+    let followerId = await req.user._id;
+    const followingInfo = {userId: followingId};
+    const followerInfo = {userId: followerId};
+    try{
+         await User.findByIdAndUpdate(followerId,
+            {$push: {following: followingInfo}}
+        );
+        console.log('added to following');
+
+        await User.findByIdAndUpdate(followingId,
+            {$push: {followers: followerInfo}}
+        );
+        console.log('added to followers');
+    }
+    catch(error){
+        res.status(400).json(error);
+    }
+}
+const unfollow = async (req,res) =>{
+    let followingId = await req.params.id;
+    let followerId = await req.user._id;
+    const followingInfo = {userId: followingId};
+    const followerInfo = {userId: followerId};
+    try{
+        await User.findByIdAndUpdate(followerId,
+            {$pull: {following: followingInfo}},
+        );
+        console.log('removed from following');
+        await User.findByIdAndUpdate(followingId,
+            {$pull: {followers: followerInfo}}
+        );
+        console.log('removed from followers');
+    }
+    catch(error){
+        res.status(400).json(error);
+    }
+}
+
 module.exports = {
     register,
     getAll,
@@ -163,5 +213,8 @@ module.exports = {
     getLoggedUserInfo,
     addProfileImage,
     getAllPostsById,
-    getUserName
-}
+    follow,
+    unfollow,
+    checkIfFollow,
+  getUserName
+};
