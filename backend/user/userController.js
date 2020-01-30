@@ -157,18 +157,26 @@ const checkIfFollow = async (req,res)=>{
     let followingId = await req.params.id;
     let followerId = await req.user._id;
 
-    let checkIfFollow = (await User.findById(followingId)).populate({
-        path: "followers",
-        match: {"userId": followerId}
-    });
-    res.json(checkIfFollow);
+
+    try {
+        let checkIfFollow = await User.findById(followingId)
+        .populate({
+            path: "followers",
+            match: {_id: followerId}
+        });
+        console.log(checkIfFollow);
+        res.json(checkIfFollow);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+    
 }
 
 const follow = async (req,res)=>{
     let followingId = await req.params.id;
     let followerId = await req.user._id;
-    const followingInfo = {userId: followingId};
-    const followerInfo = {userId: followerId};
+    const followingInfo = {_id: followingId};
+    const followerInfo = {_id: followerId};
     try{
          await User.findByIdAndUpdate(followerId,
             {$push: {following: followingInfo}}
@@ -187,8 +195,8 @@ const follow = async (req,res)=>{
 const unfollow = async (req,res) =>{
     let followingId = await req.params.id;
     let followerId = await req.user._id;
-    const followingInfo = {userId: followingId};
-    const followerInfo = {userId: followerId};
+    const followingInfo = {_id: followingId};
+    const followerInfo = {_id: followerId};
     try{
         await User.findByIdAndUpdate(followerId,
             {$pull: {following: followingInfo}},
