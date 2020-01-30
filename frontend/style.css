@@ -1,110 +1,183 @@
-body #likesBarTag {
-  position: relative; }
-body .like_container {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  background-color: white;
-  margin: 0;
-  padding: 0;
-  left: 50;
-  top: 0;
-  border: 1px solid black; }
-body ul {
-  list-style-type: none;
-  padding: 0; }
-body .row {
-  margin: 0px; }
-body #myTab {
-  display: flex;
-  justify-content: center; }
-body .profileHeader {
-  font-size: 65px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center; }
-body header {
-  font-family: 'Rochester', cursive;
-  border-bottom: 1px solid grey; }
-  body header .logout {
-    position: absolute;
-    top: 20px;
-    right: 20px; }
-  body header #headerProfile {
-    height: 40px; }
-body .feedHeader {
-  height: 114px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px; }
-  body .feedHeader .notagram {
-    font-size: 55px; }
-body .profile {
-  display: flex;
-  margin-bottom: 100px; }
-  body .profile #profilePhoto {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    margin-left: 40px;
-    margin-top: 70px; }
-  body .profile #nameAndEditDisplay {
-    width: 100%;
-    margin-left: 60px;
-    margin-top: 75px; }
-    body .profile #nameAndEditDisplay #usernameForEdit {
-      font-size: 40px; }
-    body .profile #nameAndEditDisplay #editBtn {
-      border: 1px solid #E4E4E4;
-      border-radius: 5px;
-      width: 95%;
-      height: 60px;
-      margin-right: 35px;
-      font-size: 25px; }
-body #profileInfo {
-  border-top: 1px solid #E4E4E4;
-  border-bottom: 1px solid #E4E4E4;
-  display: flex;
-  justify-content: space-evenly;
-  padding-top: 15px; }
-  body #profileInfo #posts, body #profileInfo #following, body #profileInfo #followers {
+body {
+  height: 100%; }
+  body ul {
+    list-style-type: none;
+    padding: 0; }
+  body .row {
+    margin: 0px; }
+  body #myTab {
     display: flex;
-    flex-direction: column;
+    justify-content: center; }
+  body .profileHeader {
+    font-size: 65px;
+    display: flex;
+    justify-content: space-around;
     align-items: center; }
-    body #profileInfo #posts #number, body #profileInfo #following #number, body #profileInfo #followers #number {
+  body .uploadPic {
+    margin-top: 100px;
+    margin-left: 50px; }
+  body header {
+    font-family: 'Rochester', cursive;
+    border-bottom: 1px solid grey; }
+    body header .logout {
+      position: absolute;
+      top: 20px;
+      right: 20px; }
+    body header #headerProfile {
+      height: 40px; }
+  body .feedHeader {
+    height: 114px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 6;
+    padding: 0 20px; }
+    body .feedHeader .notagram {
+      font-size: 55px; }
+  body .profile {
+    display: flex;
+    margin-bottom: 100px; }
+    body .profile #profilePhoto {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin-left: 40px;
+      margin-top: 70px; }
+    body .profile #nameAndEditDisplay {
+      width: 100%;
+      margin-left: 60px;
+      margin-top: 75px; }
+      body .profile #nameAndEditDisplay #usernameForEdit {
+        font-size: 40px; }
+      body .profile #nameAndEditDisplay #editBtn {
+        border: 1px solid #E4E4E4;
+        border-radius: 5px;
+        width: 95%;
+        height: 60px;
+        margin-right: 35px;
+        font-size: 25px; }
+  body .about_me {
+    display: none; }
+  body .col {
+    margin: 0;
+    padding: 0; }
+  body .listFollow #likeAndCommentDiv {
+    display: flex;
+    justify-content: space-between; }
+    body .listFollow #likeAndCommentDiv img {
+      margin-top: 35px;
+      margin-left: 35px; }
+    body .listFollow #likeAndCommentDiv p {
+      font-weight: 500;
+      color: #262626;
+      font-size: 50px;
+      margin-top: 35px;
+      margin-right: 35px; }
+  body .listFollow #userAndBackBtnDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 130px;
+    padding: 20px; }
+    body .listFollow #userAndBackBtnDiv p {
       font-weight: 600;
       color: #262626;
-      font-size: 40px;
-      margin-bottom: 0; }
-    body #profileInfo #posts #infoP, body #profileInfo #following #infoP, body #profileInfo #followers #infoP {
-      font-size: 25px;
-      color: #B6B6B6; }
-body .card {
-  border: none; }
-body .myFeed {
-  margin: 0px;
-  padding: 5; }
-body .footerborder {
-  border-bottom: 1px solid grey;
-  position: absolute;
-  left: 0;
-  bottom: 105px;
-  width: 100%; }
-body footer {
-  background-color: white;
-  z-index: 6;
-  display: flex;
-  justify-content: space-evenly;
-  margin-bottom: 15px;
-  margin-top: 20px;
-  height: 70px;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  overflow: hidden; }
-  body footer #footer {
-    height: 100%; }
+      font-size: 40px; }
+    body .listFollow #userAndBackBtnDiv #usernameAndPhoto {
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      body .listFollow #userAndBackBtnDiv #usernameAndPhoto #userImage {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        margin-right: 20px; }
+  body #pictureDiv {
+    height: 2000px;
+    width: 100%;
+    background-color: white;
+    z-index: 2;
+    overflow: hidden; }
+    body #pictureDiv #likeAndCommentDiv {
+      display: flex;
+      justify-content: space-between; }
+      body #pictureDiv #likeAndCommentDiv img {
+        margin-top: 35px;
+        margin-left: 35px; }
+      body #pictureDiv #likeAndCommentDiv p {
+        font-weight: 500;
+        color: #262626;
+        font-size: 50px;
+        margin-top: 35px;
+        margin-right: 35px; }
+    body #pictureDiv #userAndBackBtnDiv {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 130px;
+      padding: 20px; }
+      body #pictureDiv #userAndBackBtnDiv p {
+        font-weight: 600;
+        color: #262626;
+        font-size: 40px; }
+      body #pictureDiv #userAndBackBtnDiv #usernameAndPhoto {
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        body #pictureDiv #userAndBackBtnDiv #usernameAndPhoto #userImage {
+          height: 90px;
+          width: 90px;
+          border-radius: 50%;
+          margin-right: 20px; }
+  body .pictureDiv {
+    display: none; }
+  body #profileInfo {
+    border-top: 1px solid #E4E4E4;
+    border-bottom: 1px solid #E4E4E4;
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 15px; }
+    body #profileInfo #posts, body #profileInfo #following, body #profileInfo #followers {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      body #profileInfo #posts #number, body #profileInfo #following #number, body #profileInfo #followers #number {
+        font-weight: 600;
+        color: #262626;
+        font-size: 40px;
+        margin-bottom: 0; }
+      body #profileInfo #posts #infoP, body #profileInfo #following #infoP, body #profileInfo #followers #infoP {
+        font-size: 25px;
+        color: #B6B6B6; }
+  body .card {
+    border: none; }
+  body .myFeed {
+    margin: 0px;
+    padding: 5; }
+  body .post-container {
+    padding: 5px; }
+  body .footerborder {
+    border-bottom: 1px solid grey;
+    position: fixed;
+    left: 0;
+    bottom: 90px;
+    width: 100%; }
+  body .pushFromBottom {
+    height: 90px; }
+  body footer {
+    background-color: white;
+    z-index: 6;
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 15px;
+    padding-top: 20px;
+    height: 90px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    overflow: hidden; }
+    body footer #footer {
+      height: 100%; }
 
 /*# sourceMappingURL=style.css.map */

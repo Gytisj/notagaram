@@ -2,88 +2,236 @@ const renderAllFollowingPosts = (postArr, location) => {
 
     const allPostsContainer = document.getElementById(`${location}`);
 
-    postArr.forEach(obj => {
-        
-        //postContainer
-        const postContainer = document.createElement('li');
-        postContainer.classList.add('post-container');
-        postContainer.dataset.postID = obj._id;
-        let userid = obj.userID;
-
-        const userBar = document.createElement('p');
-        userBar.setAttribute('onclick', `userPopUp('${userid}')`);
-        const image = document.createElement('img');
-        const buttonsBar = document.createElement('p')
-        const likesBar = document.createElement('p');
-        const caption = document.createElement('p');
-        const dateBar = document.createElement('p');
-        const commentListSection = document.createElement('div');
-
-        //userBar content
-        userBar.textContent = `${obj.username}`;
-        postContainer.appendChild(userBar);
-
-        //image content
-        image.src = obj.imageURL;
-        image.style.width = '300px';
-        postContainer.appendChild(image);
-
-        //buttonsBar content
-        const likeButton = document.createElement('button');
-        const commentButton = document.createElement('button');
-        const editButton = document.createElement('button');
-        const deleteButton = document.createElement('button');
-        likeButton.textContent = 'Like';
-        commentButton.textContent = 'Comment';
-        editButton.textContent = 'Edit';
-        deleteButton.textContent = 'Delete';
-
-        buttonsBar.appendChild(likeButton);
-        buttonsBar.appendChild(commentButton);
-        buttonsBar.appendChild(editButton);
-        buttonsBar.appendChild(deleteButton);
-
-        postContainer.appendChild(buttonsBar);
-
-        //likesBar content
-        likesBar.textContent = `Likes: ${obj.likes}`;
-        postContainer.appendChild(likesBar);
-
-        //caption content
-        caption.textContent =`Caption: ${obj.caption}` ;
-        postContainer.appendChild(caption);
-
-        //date content
-        dateBar.textContent = `date: ${unixToDate(obj.date)}`;
-        postContainer.appendChild(dateBar);
-
-        //commentListSection content
-        const viewAllCommentsButton = document.createElement('button');
-        commentListSection.dataset.postID = obj._id;
-        viewAllCommentsButton.textContent = 'View all comments';
-
-        viewAllCommentsButton.addEventListener('click', (event) => {
-            getAllPostComments('5e2053181c0c7804804ac508')
-            
-            // console.log(event.target.parentNode.dataset.postID);
-            // console.log(event);
-            
+    if (location == 'list') {
+        postArr.forEach(async (obj) => {
+            getUserInfoFollowing(obj, location);
         })
+    } else {
+        postArr.forEach(obj => {
 
-        commentListSection.appendChild(viewAllCommentsButton);
-        postContainer.appendChild(commentListSection);
-        allPostsContainer.appendChild(postContainer);
-    });
+            //postContainer
+            const postContainer = document.createElement('li');
+            postContainer.classList.add('col-4', 'post-container');
+            const image = document.createElement('img');
+
+            //image content
+            image.setAttribute('id', 'myOwnPicture');
+            image.src = obj.imageURL;
+            image.style.width = '100%';
+            image.style.height = '300px';
+            image.addEventListener('click', (e) => {
+                //window.location.href = '/picture.html';
+                getUserInfo(obj, location);
+            })
+            postContainer.appendChild(image);
+            allPostsContainer.appendChild(postContainer);
+        })
+    }
 }
 
-const toProfile = () => {
-    window.location.href = './index.html';
+const renderFollowingPosts = (user, obj, location) => {
+
+    const allPostsContainer = document.getElementById(`${location}`);
+    const li = document.createElement('li');
+
+
+    //User info and back button
+    let userAndBackBtnDiv = document.createElement('div');
+    userAndBackBtnDiv.setAttribute('id', 'userAndBackBtnDiv');
+    li.appendChild(userAndBackBtnDiv);
+
+    //username and photo
+    let usernameAndPhoto = document.createElement('div');
+    usernameAndPhoto.setAttribute('id', 'usernameAndPhoto');
+    userAndBackBtnDiv.appendChild(usernameAndPhoto);
+    let userImage = document.createElement('img');
+    userImage.setAttribute('id', 'userImage');
+    userImage.src = user.imageURL;
+    let username = document.createElement('p');
+    username.textContent = `${user.username}`
+    usernameAndPhoto.appendChild(userImage);
+    usernameAndPhoto.appendChild(username);
+    userAndBackBtnDiv.appendChild(usernameAndPhoto);
+
+    //Image
+    let imageDiv = document.createElement('div');
+    imageDiv.setAttribute('id', 'imageDiv');
+    let image = document.createElement('img');
+    image.src = obj.imageURL;
+    image.style.width = '100%';
+    image.style.height = '800px';
+    imageDiv.appendChild(image);
+    li.appendChild(imageDiv);
+
+    //Likes, comments and follow button
+    let likeAndCommentDiv = document.createElement('div');
+    likeAndCommentDiv.setAttribute('id', 'likeAndCommentDiv');
+    likeAndComment = document.createElement('div');
+    let likesBtn = document.createElement('img');
+    likesBtn.src = `./png's/heart.svg`
+    likesBtn.style.width = '90px';
+    likesBtn.style.height = '70px';
+    likesBtn.addEventListener('click', (e) => {
+        console.log('Like');
+    })
+    let commentBtn = document.createElement('img');
+    commentBtn.src = `./png's/comment.svg`
+    commentBtn.style.width = '90px';
+    commentBtn.style.height = '70px';
+    commentBtn.addEventListener('click', (e) => {
+        console.log('Comment');
+        renderSoloPicture(user, obj, location);
+    })
+    likeAndComment.appendChild(likesBtn);
+    likeAndComment.appendChild(commentBtn);
+    likeAndCommentDiv.appendChild(likeAndComment);
+    li.appendChild(likeAndCommentDiv);
+    allPostsContainer.appendChild(li);
+}
+
+let getUserInfo = (obj) => {
+
+    let userId = obj.userID;
+
+    fetch(`http://localhost:2000/api/v1/user/getSingleUser/${userId}`, {
+            method: 'GET'
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            renderSoloPicture(response, obj, location);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+};
+
+let getUserInfoFollowing = (obj, location) => {
+
+    let userId = obj.userID;
+
+    fetch(`http://localhost:2000/api/v1/user/getSingleUser/${userId}`, {
+            method: 'GET'
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            renderFollowingPosts(response, obj, location);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+};
+
+const renderSoloPicture = (user, obj, location) => {
+
+    //User info and back button
+    let userAndBackBtnDiv = document.createElement('div');
+    userAndBackBtnDiv.setAttribute('id', 'userAndBackBtnDiv');
+    pictureDiv.appendChild(userAndBackBtnDiv);
+
+    //username and photo
+    let usernameAndPhoto = document.createElement('div');
+    usernameAndPhoto.setAttribute('id', 'usernameAndPhoto');
+    userAndBackBtnDiv.appendChild(usernameAndPhoto);
+    let userImage = document.createElement('img');
+    userImage.setAttribute('id', 'userImage');
+    userImage.src = user.imageURL;
+    let username = document.createElement('p');
+    username.textContent = `${user.username}`
+    usernameAndPhoto.appendChild(userImage);
+    usernameAndPhoto.appendChild(username);
+
+    //Image
+    let imageDiv = document.createElement('div');
+    imageDiv.setAttribute('id', 'imageDiv');
+    let image = document.createElement('img');
+    image.src = obj.imageURL;
+    image.style.width = '100%';
+    image.style.height = '800px';
+    imageDiv.appendChild(image);
+    pictureDiv.appendChild(imageDiv);
+
+    //Back button
+    let backBtn = document.createElement('img');
+    backBtn.src = `./png's/previous.svg`
+    backBtn.style.width = '90px';
+    backBtn.style.height = '70px';
+    backBtn.addEventListener('click', (e) => {
+        if (location == 'list') {
+            let pictureDiv = document.getElementById('pictureDiv');
+            pictureDiv.classList.add('pictureDiv');
+            pictureDiv.innerHTML = null;
+            let discoveryUl = document.getElementById('activity');
+            discoveryUl.classList.remove('about_me');
+        } else {
+            let discoveryUl = document.getElementById('myTabContent');
+            discoveryUl.classList.remove('about_me');
+            let pictureDiv = document.getElementById('pictureDiv');
+            pictureDiv.innerHTML = null;
+            pictureDiv.classList.add('pictureDiv');
+        }
+    })
+    userAndBackBtnDiv.appendChild(backBtn);
+
+    //Likes, comments and follow button
+    let likeAndCommentDiv = document.createElement('div');
+    likeAndCommentDiv.setAttribute('id', 'likeAndCommentDiv');
+    likeAndComment = document.createElement('div');
+    let likesBtn = document.createElement('img');
+    likesBtn.src = `./png's/heart.svg`
+    likesBtn.style.width = '90px';
+    likesBtn.style.height = '70px';
+    likesBtn.addEventListener('click', (e) => {
+        console.log('Like');
+    })
+    let commentBtn = document.createElement('img');
+    commentBtn.src = `./png's/comment.svg`
+    commentBtn.style.width = '90px';
+    commentBtn.style.height = '70px';
+    commentBtn.addEventListener('click', (e) => {
+        console.log('Comment');
+    })
+    likeAndComment.appendChild(likesBtn);
+    likeAndComment.appendChild(commentBtn);
+    likeAndCommentDiv.appendChild(likeAndComment);
+    pictureDiv.appendChild(likeAndCommentDiv);
+    if (location == 'list') {
+        
+    } else {
+        let followBtn = document.createElement('p');
+        followBtn.textContent = 'Unfollow';
+        likeAndCommentDiv.appendChild(followBtn);
+    }
+    
+   
+
+    if (location == 'list') {
+        let pictureDiv = document.getElementById('pictureDiv');
+        pictureDiv.classList.remove('pictureDiv');
+        let discoveryUl = document.getElementById('activity');
+        discoveryUl.classList.add('about_me');
+    } else {
+        let discoveryUl = document.getElementById('myTabContent');
+        discoveryUl.classList.add('about_me');
+        let pictureDiv = document.getElementById('pictureDiv');
+        pictureDiv.classList.remove('pictureDiv');
+    }
+
 }
 
 //UNIX timestamp conversion to user friendly date
-const unixToDate = (unixTimestamp) =>{
+const unixToDate = (unixTimestamp) => {
     const date = new Date(unixTimestamp);
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const year = date.getFullYear();
     const month = months[date.getMonth()];
     const day = date.getDate();
@@ -101,7 +249,7 @@ const pageAdd = (id) => {
     if (id === 'loadMore') {
         getAllFollowPosts();
     } else {
-        getAllPosts();
+        getAllFeedPosts();
     }
 }
 
@@ -168,38 +316,8 @@ const getAllFollowPosts = () => {
         })
 }
 
-const checkifLoggedIn1 = () => {
-    const token = localStorage.getItem('x-auth');
-
-    if (!token) {
-        alert('Redirecting to login');
-        window.location.href = "/login.html";
-
-    } else {
-        getAllFollowPosts();
-    }
-};
-
-const userPopUp = (userId) => {
-
-    fetch(`http://localhost:2000/api/v1/user/getSingleUser/${userId}`, {
-            method: 'GET'
-        })
-        .then(header => {
-            if (!header.ok) {
-                throw Error(header)
-            }
-            return header.json();
-        })
-        .then(response => {
-            getAllPostsById(response);
-        })
-        .catch(e => {
-            console.log(e);
-        })
-}
 const getAllPostsById = (userObj) => {
-    
+
     let id = userObj._id;
 
     fetch(`http://localhost:2000/api/v1/postList/getAllPostsUserPosts/${id}`, {
@@ -214,7 +332,7 @@ const getAllPostsById = (userObj) => {
         })
         .then(response => {
             renderProfilePopUp(response, userObj);
-            
+
         })
         .catch(e => {
             console.log(e)
@@ -222,74 +340,14 @@ const getAllPostsById = (userObj) => {
         })
 }
 
-// const renderProfilePopUp = (postCount, userObj) => {
-    
-//     let image = userObj.imageURL;
-//     let fullName = userObj.fullName;
-//     let followers = userObj.followers.length;
-//     let following = userObj.following.length;
-//     let username = userObj.username;
-//     let postNumber = postCount;
+let onLoad = () => {
+    let result = location.pathname;
+    if (result == '/discovery.html') {
+        getAllFeedPosts();
+    } else if (result == '/feed.html') {
+        getAllFollowPosts();
+    }
 
-//     let userDiv = document.getElementById('userInfo');
-//     // userDiv.style.position = 'absolute';
+}
 
-//     let userPopUpDiv = document.createElement('div')
-//     userPopUpDiv.setAttribute('id', 'popUpDiv');
-//     userPopUpDiv.classList.add('show', 'hide');
-
-//     let followBtn = document.createElement('button');
-//     followBtn.textContent = 'Follow';
-
-//     userDiv.appendChild(userPopUpDiv);
-
-//     let fullNameDiv = document.createElement('div');
-//     fullNameDiv.setAttribute('id', 'usernameAndFollowBtn');
-//      let nameP = document.createElement('h3');
-//      nameP.setAttribute('id', 'usernameH3');
-//      nameP.textContent = `${username}`;
-//      fullNameDiv.appendChild(nameP);
-//      fullNameDiv.appendChild(followBtn);
-//      userPopUpDiv.appendChild(fullNameDiv);
-     
-
-//      let statDiv = document.createElement('div');
-//      statDiv.setAttribute('id', 'statdiv');
-//      let followersCount = document.createElement('p');
-//      followersCount.setAttribute('id', 'infoP');
-//      let followingCount = document.createElement('p');
-//      followingCount.setAttribute('id', 'infoP');
-//      let posterCounter = document.createElement('p');
-//      posterCounter.setAttribute('id', 'infoP');
-//      followersCount.textContent = `Followers: ${followers}`;
-//      followingCount.textContent = `Following: ${following}`;
-//      posterCounter.textContent = `Posts: ${postNumber}`
-//      let nameDisplayDiv = document.createElement('p');
-//      nameDisplayDiv.setAttribute('id', 'fullName');
-//      nameDisplayDiv.style.fontSize = '20px';
-//      nameDisplayDiv.textContent = fullName;
-//      statDiv.appendChild(posterCounter);
-//      statDiv.appendChild(followersCount);
-//      statDiv.appendChild(followingCount);
-//      userDiv.appendChild(statDiv);
-//      userDiv.appendChild(nameDisplayDiv);
-
-//     if (image) {
-
-//         let imagePlace = document.getElementById('photoPlace');
-
-//         //Image upload
-//         let imgTag = document.createElement('img');
-//         imgTag.src = image;
-//         imgTag.style.width = '150px';
-//         imgTag.style.height = '150px';
-//         imgTag.style.borderRadius = '50%';
-    
-//         imagePlace.appendChild(imgTag);
-
-//     }
-
-// }
-
-checkifLoggedIn1();
-
+onLoad();
