@@ -20,18 +20,14 @@ const UserSchema = new mongoose.Schema({
         default: false
     },
     followers: [{
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-        }
+        type: mongoose.Schema.Types.ObjectId, ref: 'Users'
     }],
     imageURL: {
         type: String,
         required: false
     },
-    following: [{
-        userId: {
-            type: mongoose.Schema.Types.ObjectId
-        }
+    following: [{ 
+            type: mongoose.Schema.Types.ObjectId, ref: 'Users'
     }],
     tokens: [{
         access: {

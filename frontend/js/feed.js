@@ -133,6 +133,8 @@ let getUserInfoFollowing = (obj, location) => {
 
 const renderSoloPicture = (user, obj, location) => {
 
+    checkFollowOnRender(obj.userID);
+
     //User info and back button
     let userAndBackBtnDiv = document.createElement('div');
     userAndBackBtnDiv.setAttribute('id', 'userAndBackBtnDiv');
@@ -199,18 +201,19 @@ const renderSoloPicture = (user, obj, location) => {
     commentBtn.style.height = '70px';
     commentBtn.addEventListener('click', (e) => {
         console.log('Comment');
+        
     })
     likeAndComment.appendChild(likesBtn);
     likeAndComment.appendChild(commentBtn);
     likeAndCommentDiv.appendChild(likeAndComment);
     pictureDiv.appendChild(likeAndCommentDiv);
-    if (location == 'list') {
-        
-    } else {
         let followBtn = document.createElement('p');
         followBtn.textContent = 'Unfollow';
+        followBtn.addEventListener('click', (e) => {
+            checkIfFollow(obj.userID);
+        })
         likeAndCommentDiv.appendChild(followBtn);
-    }
+
     
    
 
@@ -350,11 +353,11 @@ let onLoad = () => {
 
 };
 
-const follow = ()=>{
+const follow = (id)=>{
     
     const token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:2000/api/v1/user/follow/5e31dc8d35c22964fc7fb9a0`, {
+    fetch(`http://localhost:2000/api/v1/user/follow/${id}`, {
         method: 'PATCH',
         headers: {
             'x-auth': token
@@ -374,11 +377,11 @@ const follow = ()=>{
         })
 }
 
-const unfollow = ()=>{
+const unfollow = (id)=>{
     
     const token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:2000/api/v1/user/unfollow/5e31dc8d35c22964fc7fb9a0`, {
+    fetch(`http://localhost:2000/api/v1/user/unfollow/${id}`, {
         method: 'PATCH',
         headers: {
             'x-auth': token
@@ -398,11 +401,13 @@ const unfollow = ()=>{
         })
 }
 
-const checkIfFollow = () =>{
+const checkIfFollow = (id) =>{
+
+    console.log(id);
 
     const token = localStorage.getItem('x-auth');
 
-    fetch(`http://localhost:2000/api/v1/user/checkIfFollow/5e31dc8d35c22964fc7fb9a0`, {
+    fetch(`http://localhost:2000/api/v1/user/checkIfFollow/${id}`, {
         method: 'GET',
         headers: {
             'x-auth': token
@@ -416,10 +421,12 @@ const checkIfFollow = () =>{
         })
         .then(response => {
             if(response.followers.length>0){
-                unfollow();
+                console.log(response);
+                unfollow(id);
             }
-            else if(response.followers.length==0){
-                follow();
+            else if (response.followers.length == 0) {
+                console.log(response);
+                follow(id);
             }
         })
         .catch(e => {
@@ -427,12 +434,34 @@ const checkIfFollow = () =>{
         })
 }
 
+const checkFollowOnRender = (id) => {
+    const token = localStorage.getItem('x-auth');
+    console.log(id);
 
-
-
-checkifLoggedIn();
-
-
+    fetch(`http://localhost:2000/api/v1/user/checkIfFollow/${id}`, {
+        method: 'GET',
+        headers: {
+            'x-auth': token
+        }
+    })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+            return header.json();
+        })
+        .then(response => {
+            // if(response.followers.length>0){
+            //     console.log(response);
+            // }
+            // else if(response.followers.length==0){
+            //     console.log(response);
+            // }
+            console.log(response);
+        })
+        .catch(e => {
+            console.log(e);
+        })
 }
 
 onLoad();
