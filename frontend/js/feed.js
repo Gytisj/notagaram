@@ -184,6 +184,10 @@ const renderSoloPicture = (user, obj, location) => {
     })
     userAndBackBtnDiv.appendChild(backBtn);
 
+    //Caption
+    let caption = document.createElement('p');
+    caption.textContent = `${obj}`
+
     //Likes, comments and follow button
     let likeAndCommentDiv = document.createElement('div');
     likeAndCommentDiv.setAttribute('id', 'likeAndCommentDiv');

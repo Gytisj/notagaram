@@ -2,8 +2,7 @@ const PostModel = require('../postList/postModel');
 
 const getAllFollowingPosts = async (req, res) => {
 
-    // let following = req.user.following;
-    let following = ["5e323fd195bd31485b6ec7aa"];
+    let following = req.user.following;
 
 
     try {

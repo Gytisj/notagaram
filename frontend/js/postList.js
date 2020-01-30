@@ -89,7 +89,12 @@ const getAllPosts = () => {
             return header.json();
         })
         .then(response => {
-            //renderAllPosts(response);
+            // renderAllPosts(response);
+            // if (location.href = '/discovery.html') {
+            //     renderAllPostImages(response);
+            // } else if (location.href = '/index.html') {
+            //     renderAllPostImages(response);
+            // }
             renderAllPostImages(response);
             //postNumber(response);
             
@@ -400,8 +405,11 @@ const editComment = (id, updatedText) => {
 // }
 const renderAllPostImages = (postArr) => {
   
+
     const allPostsContainer = document.getElementById('myFeed');
-    allPostsContainer.textContent = null;
+    if (allPostsContainer) {
+        allPostsContainer.textContent = null;
+    }
 
     postArr.forEach(obj => {
         
@@ -413,7 +421,9 @@ const renderAllPostImages = (postArr) => {
         image.style.width = '100%';
         image.style.height = '300px';
         postContainer.appendChild(image);
-        allPostsContainer.appendChild(postContainer);
+        if (allPostsContainer) {
+            allPostsContainer.appendChild(postContainer);
+        }
     });
 
 }
