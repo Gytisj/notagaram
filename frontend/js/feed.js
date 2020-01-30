@@ -133,7 +133,7 @@ let getUserInfoFollowing = (obj, location) => {
 
 const renderSoloPicture = (user, obj, location) => {
 
-    checkFollowOnRender(obj.userID);
+    
 
     //User info and back button
     let userAndBackBtnDiv = document.createElement('div');
@@ -211,10 +211,10 @@ const renderSoloPicture = (user, obj, location) => {
     likeAndComment.appendChild(commentBtn);
     likeAndCommentDiv.appendChild(likeAndComment);
     pictureDiv.appendChild(likeAndCommentDiv);
-        let followBtn = document.createElement('p');
-        followBtn.textContent = 'Unfollow';
-        followBtn.addEventListener('click', (e) => {
-            checkIfFollow(obj.userID);
+    let followBtn = document.createElement('p');
+    followBtn.textContent = 'Unfollow';
+    followBtn.addEventListener('click', async (e) => {
+        checkIfFollow(obj.userID);
         })
         likeAndCommentDiv.appendChild(followBtn);
 
@@ -232,6 +232,8 @@ const renderSoloPicture = (user, obj, location) => {
         let pictureDiv = document.getElementById('pictureDiv');
         pictureDiv.classList.remove('pictureDiv');
     }
+
+    checkFollowOnRender(obj.userID, followBtn);
 
 }
 
@@ -406,7 +408,6 @@ const unfollow = (id)=>{
 }
 
 const checkIfFollow = (id) =>{
-
     console.log(id);
 
     const token = localStorage.getItem('x-auth');
@@ -424,13 +425,13 @@ const checkIfFollow = (id) =>{
             return header.json();
         })
         .then(response => {
-            if(response.followers.length>0){
-                console.log(response);
-                unfollow(id);
-            }
-            else if (response.followers.length == 0) {
-                console.log(response);
+            if(response.followers.length == 0){
+                console.log(`adding a follower to ${response.fullName}`);
                 follow(id);
+            }
+            if(response.followers.length>0){
+                console.log(`removing a follower from ${response.fullName}`);
+                unfollow(id);
             }
         })
         .catch(e => {
@@ -438,9 +439,8 @@ const checkIfFollow = (id) =>{
         })
 }
 
-const checkFollowOnRender = (id) => {
+const checkFollowOnRender = (id, followBtn) => {
     const token = localStorage.getItem('x-auth');
-    console.log(id);
 
     fetch(`http://localhost:2000/api/v1/user/checkIfFollow/${id}`, {
         method: 'GET',
@@ -455,13 +455,12 @@ const checkFollowOnRender = (id) => {
             return header.json();
         })
         .then(response => {
-            // if(response.followers.length>0){
-            //     console.log(response);
-            // }
-            // else if(response.followers.length==0){
-            //     console.log(response);
-            // }
-            console.log(response);
+            if(response.followers == 0){
+                followBtn.textContent = "follow";
+            }
+            if(response.followers >0){
+                followBtn.textContent = "unfollow";
+            }
         })
         .catch(e => {
             console.log(e);
