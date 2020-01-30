@@ -59,6 +59,7 @@ const getAllLikes = async (req, res) => {
 
 //post list by user ID
 const getAllPosts = async (req, res) => {
+    
 
     try {
         const postList = await PostModel.find({

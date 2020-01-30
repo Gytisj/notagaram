@@ -1,15 +1,3 @@
-const checkifLoggedIn = () => {
-  const token = localStorage.getItem("x-auth");
-
-  if (!token) {
-    alert("Redirecting to login");
-    window.location.href = "/login.html";
-  } else {
-    //getItems();
-  }
-};
-
-
 const createPost = () => {
   let token = localStorage.getItem("x-auth");
   let image = document.getElementById("newPostImage");
@@ -27,7 +15,6 @@ const createPost = () => {
     }
   })
     .then(header => {
-      console.log(header);
       if (!header.ok) {
         throw Error(header);
       }
@@ -44,48 +31,12 @@ const createPost = () => {
     });
 };
 
+// let uploadPicBtn = document.getElementById('profilePicture');
 
-
-// const createPost = () => {
-
-//     let token = localStorage.getItem('x-auth');
-//     let image = document.getElementById('newPostImage');
-//     let caption = document.getElementById('newPostCaption').value
-
-//     let data = new FormData();
-//     data.append('picture', image.files[0]);
-//     data.append('caption', caption);
-
-
-//     fetch('http://localhost:2000/api/v1/postList/addPost', {
-//             method: 'POST',
-//             body: data,
-//             headers: {
-//                 'x-auth': token
-//             }
-//         })
-//         .then(header => {
-//             if (!header.ok) {
-//                 throw Error(header)
-//             }
-//             return header;
-//         })
-//         .then(response => {
-//             alert('Item added');
-//             getAllPosts();
-//         })
-//         .catch(e => {
-//             console.log(e)
-//             alert('Item failed')
-//         })
-// }
-
-let uploadPicBtn = document.getElementById('profilePicture');
-
-uploadPicBtn.addEventListener('click', (e) => {
-    console.log('labas');
-    // addProfileImage();
-})
+// uploadPicBtn.addEventListener('click', (e) => {
+//     console.log('labas');
+//     // addProfileImage();
+// })
 
 
 const addProfileImage = () => {
@@ -117,8 +68,6 @@ const addProfileImage = () => {
         })
 }
 
-let postArrLength = 1;
-
 
 const getAllPosts = () => {
     console.log('GETING POSTS');
@@ -126,7 +75,7 @@ const getAllPosts = () => {
 
     const token = localStorage.getItem('x-auth');
 
-    fetch('http://localhost:2000/api/v1/postList/getAllPosts', {
+    fetch(`http://localhost:2000/api/v1/postList/getAllPosts`, {
             method: 'GET',
             headers: {
                 'x-auth': token
@@ -333,127 +282,125 @@ const editComment = (id, updatedText) => {
         })
 }
 
-const toAddPicture = () => {
-    window.location.href = '/uploadPic.html';
-}
 
-const renderAllPosts = (postArr) => {
 
-    const allPostsContainer = document.getElementById('list');
-    allPostsContainer.textContent = null;
+// const renderAllPosts = (postArr) => {
 
-    postArr.forEach(obj => {
+//     const allPostsContainer = document.getElementById('list');
+//     allPostsContainer.textContent = null;
 
-        const postContainer = document.createElement('div');
-        postContainer.classList.add('post-container');
-        postContainer.id = obj._id;
-        //postContainer.dataset.postID = obj._id;
+//     postArr.forEach(obj => {
+
+//         const postContainer = document.createElement('div');
+//         postContainer.classList.add('post-container');
+//         postContainer.id = obj._id;
+//         //postContainer.dataset.postID = obj._id;
         
 
-        const userBar = document.createElement('p')
-        const image = document.createElement('img');
-        const buttonsBar = document.createElement('p')
-        const likesBar = document.createElement('p');
-        const caption = document.createElement('p');
-        const dateBar = document.createElement('p');
-        const commentListSection = document.createElement('div');
-        const newCommentContainer = document.createElement('div');
+//         const userBar = document.createElement('p')
+//         const image = document.createElement('img');
+//         const buttonsBar = document.createElement('p')
+//         const likesBar = document.createElement('p');
+//         const caption = document.createElement('p');
+//         const dateBar = document.createElement('p');
+//         const commentListSection = document.createElement('div');
+//         const newCommentContainer = document.createElement('div');
 
-        //userBar content
-        userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
-        postContainer.appendChild(userBar);
+//         //userBar content
+//         userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
+//         postContainer.appendChild(userBar);
 
-        //image content
-        image.src = obj.imageURL;
-        image.style.width = '300px';
-        postContainer.appendChild(image);
+//         //image content
+//         image.src = obj.imageURL;
+//         image.style.width = '300px';
+//         postContainer.appendChild(image);
 
-        //buttonsBar content
-        const likeButton = document.createElement('button');
-        const commentButton = document.createElement('button');
-        const editButton = document.createElement('button');
-        const deleteButton = document.createElement('button');
-        likeButton.textContent = 'Like';
-        commentButton.textContent = 'Comment';
-        editButton.textContent = 'Edit';
-        deleteButton.textContent = 'Delete';
+//         //buttonsBar content
+//         const likeButton = document.createElement('button');
+//         const commentButton = document.createElement('button');
+//         const editButton = document.createElement('button');
+//         const deleteButton = document.createElement('button');
+//         likeButton.textContent = 'Like';
+//         commentButton.textContent = 'Comment';
+//         editButton.textContent = 'Edit';
+//         deleteButton.textContent = 'Delete';
 
-        buttonsBar.appendChild(likeButton);
-        buttonsBar.appendChild(commentButton);
-        buttonsBar.appendChild(editButton);
-        buttonsBar.appendChild(deleteButton);
+//         buttonsBar.appendChild(likeButton);
+//         buttonsBar.appendChild(commentButton);
+//         buttonsBar.appendChild(editButton);
+//         buttonsBar.appendChild(deleteButton);
 
-        postContainer.appendChild(buttonsBar);
+//         postContainer.appendChild(buttonsBar);
 
-        //likesBar content
-        likesBar.textContent = `Likes: ${obj.likes}`;
-        postContainer.appendChild(likesBar);
-      likesBar.setAttribute("id", "likesBarTag");
+//         //likesBar content
+//         likesBar.textContent = `Likes: ${obj.likes}`;
+//         postContainer.appendChild(likesBar);
+//       likesBar.setAttribute("id", "likesBarTag");
 
-    likesBar.addEventListener("click", event => {
-      renderLikes(obj._id);
-    });
+//     likesBar.addEventListener("click", event => {
+//       renderLikes(obj._id);
+//     });
 
-    likeButton.addEventListener("click", event => {
-      addLike(obj._id);
-    });
+//     likeButton.addEventListener("click", event => {
+//       addLike(obj._id);
+//     });
 
 
-        //caption content
-        caption.textContent = `Caption: ${obj.caption}`;
-        postContainer.appendChild(caption);
+//         //caption content
+//         caption.textContent = `Caption: ${obj.caption}`;
+//         postContainer.appendChild(caption);
 
-        //date content
-        dateBar.textContent = `date: ${unixToDate(obj.date)}`;
-        postContainer.appendChild(dateBar);
+//         //date content
+//         dateBar.textContent = `date: ${unixToDate(obj.date)}`;
+//         postContainer.appendChild(dateBar);
 
-        //commentListSection content
-        const viewAllCommentsButton = document.createElement('button');
-        viewAllCommentsButton.textContent = 'View all comments';
-        viewAllCommentsButton.classList.add('view-all-comments-btn')
-        //getAllPostComments(obj._id, commentListSection);
-        //getLatestPostComments(obj._id, commentListSection)
-        ////renderAllComments(obj.latestComments, commentListSection)
+//         //commentListSection content
+//         const viewAllCommentsButton = document.createElement('button');
+//         viewAllCommentsButton.textContent = 'View all comments';
+//         viewAllCommentsButton.classList.add('view-all-comments-btn')
+//         //getAllPostComments(obj._id, commentListSection);
+//         //getLatestPostComments(obj._id, commentListSection)
+//         ////renderAllComments(obj.latestComments, commentListSection)
         
-        //console.log(obj.latestComments)
+//         //console.log(obj.latestComments)
 
-        viewAllCommentsButton.addEventListener('click', (event) => {
+//         viewAllCommentsButton.addEventListener('click', (event) => {
 
-            viewAllCommentsButton.style.display = 'none';
-            getAllPostComments(obj._id, commentListSection);
+//             viewAllCommentsButton.style.display = 'none';
+//             getAllPostComments(obj._id, commentListSection);
 
-        })
+//         })
 
-        postContainer.appendChild(viewAllCommentsButton);
-        postContainer.appendChild(commentListSection);
+//         postContainer.appendChild(viewAllCommentsButton);
+//         postContainer.appendChild(commentListSection);
 
-        //commentInput section
-        newCommentContainer.classList.add('new-comment-container');
+//         //commentInput section
+//         newCommentContainer.classList.add('new-comment-container');
 
-        const addCommentInput = document.createElement('input');
-        addCommentInput.placeholder = 'Add a comment...'
-        newCommentContainer.appendChild(addCommentInput);
+//         const addCommentInput = document.createElement('input');
+//         addCommentInput.placeholder = 'Add a comment...'
+//         newCommentContainer.appendChild(addCommentInput);
 
-        const addCommentButton = document.createElement('button');
-        addCommentButton.textContent = 'POST';
-        newCommentContainer.appendChild(addCommentButton);
+//         const addCommentButton = document.createElement('button');
+//         addCommentButton.textContent = 'POST';
+//         newCommentContainer.appendChild(addCommentButton);
 
-        addCommentButton.addEventListener('click', event => {
+//         addCommentButton.addEventListener('click', event => {
         
-            viewAllCommentsButton.style.display = 'none'
-            createComment(obj._id, addCommentInput.value, commentListSection);
+//             viewAllCommentsButton.style.display = 'none'
+//             createComment(obj._id, addCommentInput.value, commentListSection);
 
 
-        })
+//         })
 
-        postContainer.appendChild(newCommentContainer);
+//         postContainer.appendChild(newCommentContainer);
 
-        allPostsContainer.appendChild(postContainer);
-    });
-}
+//         allPostsContainer.appendChild(postContainer);
+//     });
+// }
 const renderAllPostImages = (postArr) => {
   
-    const allPostsContainer = document.getElementById('list');
+    const allPostsContainer = document.getElementById('myFeed');
     allPostsContainer.textContent = null;
 
     postArr.forEach(obj => {
@@ -466,8 +413,6 @@ const renderAllPostImages = (postArr) => {
         image.style.width = '100%';
         image.style.height = '300px';
         postContainer.appendChild(image);
-        allPostsContainer.appendChild(postContainer);
-
         allPostsContainer.appendChild(postContainer);
     });
 
@@ -711,8 +656,7 @@ const logout = () => {
 };
 
 
-const feed = () => {
-    window.location.href = "/feed.html"
-}
 
-checkifLoggedIn();
+
+// checkifLoggedIn();
+getAllPosts();
