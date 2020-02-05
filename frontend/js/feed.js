@@ -185,7 +185,8 @@ const renderSoloPicture = (user, obj, location) => {
     likesBtn.style.width = '90px';
     likesBtn.style.height = '70px';
     likesBtn.addEventListener('click', (e) => {
-        console.log('Like');
+        addLike(user._id);
+        // console.log(user._id);
     })
     let commentBtn = document.createElement('img');
     commentBtn.src = `./png's/comment.svg`
@@ -398,7 +399,7 @@ const addLike = id => {
   console.log(id);
   fetch(`http://localhost:2000/api/v1/feedList/addLike/${id}`, {
     method: "PATCH",
-    body: JSON.stringify(body),
+    // body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
       "x-auth": token
@@ -413,8 +414,8 @@ const addLike = id => {
       return header.json();
     })
     .then(response => {
-      //console.log(response)
-      renderLikes(id);
+      console.log(response)
+    //   renderLikes(id);
       alert("Event status updated!");
     })
     .catch(e => {
