@@ -134,62 +134,6 @@ const editPost = (id) => {
 
 }
 
-  const token = localStorage.getItem("x-auth");
-
-  fetch(`http://localhost:2000/api/v1/postList/getAllPosts`, {
-    method: "GET",
-    headers: {
-      "x-auth": token
-    }
-  })
-    .then(header => {
-      if (!header.ok) {
-        throw Error(header);
-      }
-
-      return header.json();
-    })
-    .then(response => {
-      console.log(response);
-      //renderAllPosts(response);
-      renderAllPostImages(response);
-      //postNumber(response);
-    })
-    .catch(e => {
-      console.log(e);
-      //alert('Failed!')
-    });
-};
-
-const editPost = id => {
-  let token = localStorage.getItem("x-auth");
-
-  fetch(`http://localhost:3000/api/v1/todo/updateSingle/${id}`, {
-    method: "PATCH",
-    //body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      "x-auth": token
-    }
-  })
-    .then(header => {
-      if (!header.ok) {
-        throw Error(header);
-      }
-
-      //console.log(token);
-      return header.json();
-    })
-    .then(response => {
-      //console.log(response)
-      alert("Event status updated!");
-    })
-    .catch(e => {
-      console.log(e);
-      alert("Event set failled!");
-    });
-};
-
 const createComment = (postID, commentText, postTagRef) => {
   console.log("ADDING POST COMMENT");
   //console.log(commentText)
@@ -244,7 +188,6 @@ const getAllPostComments = (postID, postTagRef) => {
       return header.json();
     })
     .then(response => {
-      POST;
       console.log(response);
 
       renderAllComments(response, postTagRef);
@@ -331,118 +274,6 @@ const editComment = (id, updatedText) => {
     });
 };
 
-// const renderAllPosts = (postArr) => {
-
-//     const allPostsContainer = document.getElementById('list');
-//     allPostsContainer.textContent = null;
-
-//     postArr.forEach(obj => {
-
-//         const postContainer = document.createElement('div');
-//         postContainer.classList.add('post-container');
-//         postContainer.id = obj._id;
-//         //postContainer.dataset.postID = obj._id;
-
-//         const userBar = document.createElement('p')
-//         const image = document.createElement('img');
-//         const buttonsBar = document.createElement('p')
-//         const likesBar = document.createElement('p');
-//         const caption = document.createElement('p');
-//         const dateBar = document.createElement('p');
-//         const commentListSection = document.createElement('div');
-//         const newCommentContainer = document.createElement('div');
-
-//         //userBar content
-//         userBar.textContent = `Username: ${obj.username} | UserID: ${obj.userID} | PostID: ${obj._id}`;
-//         postContainer.appendChild(userBar);
-
-//         //image content
-//         image.src = obj.imageURL;
-//         image.style.width = '300px';
-//         postContainer.appendChild(image);
-
-//         //buttonsBar content
-//         const likeButton = document.createElement('button');
-//         const commentButton = document.createElement('button');
-//         const editButton = document.createElement('button');
-//         const deleteButton = document.createElement('button');
-//         likeButton.textContent = 'Like';
-//         commentButton.textContent = 'Comment';
-//         editButton.textContent = 'Edit';
-//         deleteButton.textContent = 'Delete';
-
-//         buttonsBar.appendChild(likeButton);
-//         buttonsBar.appendChild(commentButton);
-//         buttonsBar.appendChild(editButton);
-//         buttonsBar.appendChild(deleteButton);
-
-//         postContainer.appendChild(buttonsBar);
-
-//         //likesBar content
-//         likesBar.textContent = `Likes: ${obj.likes}`;
-//         postContainer.appendChild(likesBar);
-//       likesBar.setAttribute("id", "likesBarTag");
-
-//     likesBar.addEventListener("click", event => {
-//       renderLikes(obj._id);
-//     });
-
-//     likeButton.addEventListener("click", event => {
-//       addLike(obj._id);
-//     });
-
-//         //caption content
-//         caption.textContent = `Caption: ${obj.caption}`;
-//         postContainer.appendChild(caption);
-
-//         //date content
-//         dateBar.textContent = `date: ${unixToDate(obj.date)}`;
-//         postContainer.appendChild(dateBar);
-
-//         //commentListSection content
-//         const viewAllCommentsButton = document.createElement('button');
-//         viewAllCommentsButton.textContent = 'View all comments';
-//         viewAllCommentsButton.classList.add('view-all-comments-btn')
-//         //getAllPostComments(obj._id, commentListSection);
-//         //getLatestPostComments(obj._id, commentListSection)
-//         ////renderAllComments(obj.latestComments, commentListSection)
-
-//         //console.log(obj.latestComments)
-
-//         viewAllCommentsButton.addEventListener('click', (event) => {
-
-//             viewAllCommentsButton.style.display = 'none';
-//             getAllPostComments(obj._id, commentListSection);
-
-//         })
-
-//         postContainer.appendChild(viewAllCommentsButton);
-//         postContainer.appendChild(commentListSection);
-
-//         //commentInput section
-//         newCommentContainer.classList.add('new-comment-container');
-
-//         const addCommentInput = document.createElement('input');
-//         addCommentInput.placeholder = 'Add a comment...'
-//         newCommentContainer.appendChild(addCommentInput);
-
-//         const addCommentButton = document.createElement('button');
-//         addCommentButton.textContent = 'POST';
-//         newCommentContainer.appendChild(addCommentButton);
-
-//         addCommentButton.addEventListener('click', event => {
-
-//             viewAllCommentsButton.style.display = 'none'
-//             createComment(obj._id, addCommentInput.value, commentListSection);
-
-//         })
-
-//         postContainer.appendChild(newCommentContainer);
-
-//         allPostsContainer.appendChild(postContainer);
-//     });
-// }
-
 const renderAllPostImages = (postArr) => {
   
 
@@ -464,7 +295,7 @@ const renderAllPostImages = (postArr) => {
         if (allPostsContainer) {
             allPostsContainer.appendChild(postContainer);
         }
-    });
+})};
 
 const renderAllComments = (commentsArr, commetsContainer) => {
   //console.log('commentsArr', commentsArr)
@@ -550,46 +381,31 @@ const renderSingleComment = commentObj => {
 };
 
 const renderLatestComments = commentsArr => {
-  // const allComments = document.createElement('div');
-  // allComments.classList.add('all-comments-container');
-  // for (let index = 0; index < 2; index++) {
-  //    console.log(index);
-  // }
-  // commentsArr.forEach(obj => {
-  //     const commentLine = document.createElement('div');
-  //     const comment = document.createElement('p');
-  //     const user = document.createElement('p');
-  //     const commentDeleteButton = document.createElement('button');
-  //     //console.log(obj.username);
-  //     user.textContent = `${obj.username}:`;
-  //     comment.textContent = `${obj.text}`;
-  //     commentDeleteButton.textContent = 'X'
-  //     //console.log(comment);
-  //     user.style.display = 'inline-block';
-  //     comment.style.display = 'inline-block';
-  //     commentLine.appendChild(user);
-  //     commentLine.appendChild(comment);
-  //     commentLine.appendChild(commentDeleteButton);
-  //     allComments.appendChild(commentLine);
-  //     //commentListSection.appendChild('comment');
-  // });
-  // commetsContainer.appendChild(allComments);
+  const allComments = document.createElement('div');
+  allComments.classList.add('all-comments-container');
+  for (let index = 0; index < 2; index++) {
+     console.log(index);
+  }
+  commentsArr.forEach(obj => {
+      const commentLine = document.createElement('div');
+      const comment = document.createElement('p');
+      const user = document.createElement('p');
+      const commentDeleteButton = document.createElement('button');
+      //console.log(obj.username);
+      user.textContent = `${obj.username}:`;
+      comment.textContent = `${obj.text}`;
+      commentDeleteButton.textContent = 'X'
+      //console.log(comment);
+      user.style.display = 'inline-block';
+      comment.style.display = 'inline-block';
+      commentLine.appendChild(user);
+      commentLine.appendChild(comment);
+      commentLine.appendChild(commentDeleteButton);
+      allComments.appendChild(commentLine);
+      //commentListSection.appendChild('comment');
+  });
+  commetsContainer.appendChild(allComments);
 };
-
-//UNIX timestamp conversion to user friendly date
-
-// const unixToDate = (unixTimestamp) =>{
-//     const date = new Date(unixTimestamp);
-//     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//     const year = date.getFullYear();
-//     const month = months[date.getMonth()];
-//     const day = date.getDate();
-//     // const hour = date.getHours();
-//     // const min = date.getMinutes();
-//     // const sec = date.getSeconds();
-//     const time = `${month} ${day}, ${year}`;
-//     return time;
-// }
 
 const logout = () => {
   const token = localStorage.getItem("x-auth");
