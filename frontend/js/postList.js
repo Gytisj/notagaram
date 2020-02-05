@@ -67,7 +67,72 @@ const addProfileImage = () => {
 };
 
 const getAllPosts = () => {
-  console.log("GETING POSTS");
+    console.log('GETING POSTS');
+
+
+    const token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:2000/api/v1/postList/getAllPosts`, {
+            method: 'GET',
+            headers: {
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+
+            return header.json();
+        })
+        .then(response => {
+            // renderAllPosts(response);
+            // if (location.href = '/discovery.html') {
+            //     renderAllPostImages(response);
+            // } else if (location.href = '/index.html') {
+            //     renderAllPostImages(response);
+            // }
+            renderAllPostImages(response);
+            //postNumber(response);
+            
+        })
+        .catch(e => {
+            console.log(e)
+            //alert('FUCK ! WE FAILLED')
+        })
+}
+
+const editPost = (id) => {
+
+    let token = localStorage.getItem('x-auth');
+
+    fetch(`http://localhost:3000/api/v1/todo/updateSingle/${id}`, {
+            method: 'PATCH',
+            //body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth': token
+            }
+        })
+        .then(header => {
+            if (!header.ok) {
+                throw Error(header)
+            }
+
+            //console.log(token);
+            return header.json();
+        })
+        .then(response => {
+
+            //console.log(response)
+            alert('Event status updated!');
+        })
+        .catch(e => {
+            console.log(e)
+            alert('Event set failled!')
+        })
+
+}
 
   const token = localStorage.getItem("x-auth");
 
@@ -377,22 +442,29 @@ const editComment = (id, updatedText) => {
 //         allPostsContainer.appendChild(postContainer);
 //     });
 // }
-const renderAllPostImages = postArr => {
-  const allPostsContainer = document.getElementById("myFeed");
-  allPostsContainer.textContent = null;
 
-  postArr.forEach(obj => {
-    const postContainer = document.createElement("li");
-    postContainer.classList.add("col-4", "myFeed");
-    const image = document.createElement("img");
-    image.setAttribute("id", "myOwnPicture");
-    image.src = obj.imageURL;
-    image.style.width = "100%";
-    image.style.height = "300px";
-    postContainer.appendChild(image);
-    allPostsContainer.appendChild(postContainer);
-  });
-};
+const renderAllPostImages = (postArr) => {
+  
+
+    const allPostsContainer = document.getElementById('myFeed');
+    if (allPostsContainer) {
+        allPostsContainer.textContent = null;
+    }
+
+    postArr.forEach(obj => {
+        
+        const postContainer = document.createElement('li');
+        postContainer.classList.add('col-4', 'myFeed');
+        const image = document.createElement('img');
+        image.setAttribute('id', 'myOwnPicture');
+        image.src = obj.imageURL;
+        image.style.width = '100%';
+        image.style.height = '300px';
+        postContainer.appendChild(image);
+        if (allPostsContainer) {
+            allPostsContainer.appendChild(postContainer);
+        }
+    });
 
 const renderAllComments = (commentsArr, commetsContainer) => {
   //console.log('commentsArr', commentsArr)

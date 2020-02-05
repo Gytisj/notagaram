@@ -157,26 +157,31 @@ const checkIfFollow = async (req,res)=>{
     let followingId = await req.params.id;
     let followerId = await req.user._id;
 
-    let checkIfFollow = (await User.findById(followingId)).populate({
-        path: "followers",
-        match: {"userId": followerId}
-    });
-    res.json(checkIfFollow);
+
+    try {
+        let checkIfFollow = await User.findById(followingId)
+        .populate({
+            path: "followers",
+            match: {_id: followerId}
+        });
+        res.json(checkIfFollow);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+    
 }
 
 const follow = async (req,res)=>{
     let followingId = await req.params.id;
     let followerId = await req.user._id;
-    const followingInfo = {userId: followingId};
-    const followerInfo = {userId: followerId};
     try{
          await User.findByIdAndUpdate(followerId,
-            {$push: {following: followingInfo}}
+            {$push: {following: followingId}}
         );
         console.log('added to following');
 
         await User.findByIdAndUpdate(followingId,
-            {$push: {followers: followerInfo}}
+            {$push: {followers: followerId}}
         );
         console.log('added to followers');
     }
@@ -184,18 +189,17 @@ const follow = async (req,res)=>{
         res.status(400).json(error);
     }
 }
-const unfollow = async (req,res) =>{
+const unfollow = async (req,res)=>{
     let followingId = await req.params.id;
     let followerId = await req.user._id;
-    const followingInfo = {userId: followingId};
-    const followerInfo = {userId: followerId};
     try{
-        await User.findByIdAndUpdate(followerId,
-            {$pull: {following: followingInfo}},
+         await User.findByIdAndUpdate(followerId,
+            {$pull: {following: followingId}}
         );
         console.log('removed from following');
+
         await User.findByIdAndUpdate(followingId,
-            {$pull: {followers: followerInfo}}
+            {$pull: {followers: followerId}}
         );
         console.log('removed from followers');
     }
